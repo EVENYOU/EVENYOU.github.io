@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="google-site-verification" content="KTz4pNzSuNgv5fvCFLjmEw36-d3pKYWiQUFtPi8AGfc" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evenyou Studio</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #ffffff;
+  --fg: #1d1d1f;
+  --mid: #6e6e73;
+  --subtle: #f5f5f7;
+  --border: #e5e5ea;
+  --blue: #0071e3;
+  --nav-bg: rgba(255, 255, 255, 0.86);
+  --nav-border: rgba(0, 0, 0, 0.06);
+  --hero-bg: radial-gradient(ellipse 80% 50% at 50% 0%, #f5f5f7 0%, #ffffff 70%);
+  --logo-filter: brightness(0);
+  --box-bg: #ffffff;
+  --source-hover-bg: #efeff4;
+  --source-hover-border: #c7c7cc;
+  --btn-primary-fg: #ffffff;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  --spring: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  --bg: #000000;
+  --fg: #f5f5f7;
+  --mid: #86868b;
+  --subtle: #141417;
+  --border: rgba(255, 255, 255, 0.11);
+  --blue: #0071e3;
+  --nav-bg: rgba(12, 12, 15, 0.82);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --hero-bg: radial-gradient(ellipse 80% 50% at 50% 0%, #15151d 0%, #000000 70%);
+  --logo-filter: brightness(0) invert(1);
+  --box-bg: #1c1c21;
+  --source-hover-bg: #1e1e24;
+  --source-hover-border: rgba(255, 255, 255, 0.22);
+  --btn-primary-fg: #000000;
+  color-scheme: dark;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+body.modal-open { overflow: hidden; }
+
+/* Inline Platform Logos */
+.plat-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24em;
+  white-space: nowrap;
+}
+.plat-svg {
+  width: 0.92em;
+  height: 0.92em;
+  display: inline-block;
+  vertical-align: -0.1em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* ══ NAV ══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem;
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--nav-border);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.nav-left { display: flex; align-items: center; gap: 2.75rem; }
+.nav-logo-img {
+  height: 48px;
+  width: auto;
+  display: block;
+  filter: var(--logo-filter);
+  transform: scale(1.26);
+  transform-origin: left center;
+  transition: filter 0.25s ease;
+}
+.nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem; font-weight: 400; color: var(--fg);
+  text-decoration: none; opacity: 0.72; transition: opacity 0.15s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.theme-toggle {
+  width: 30px;
+  height: 30px;
+  border-radius: 980px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, opacity 0.15s;
+}
+.theme-toggle:hover {
+  background: var(--subtle);
+}
+.theme-toggle svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  fill: none;
+}
+.lang-toggle {
+  display: flex; align-items: center;
+  border: 1px solid var(--border); border-radius: 980px; overflow: hidden;
+  font-size: 0.72rem; font-weight: 500;
+}
+.lang-btn {
+  padding: 4px 12px; cursor: pointer; border: none; background: transparent;
+  color: var(--mid); font-size: 0.72rem; font-weight: 500; font-family: var(--font);
+  transition: background 0.15s, color 0.15s;
+}
+.lang-btn.active { background: var(--fg); color: var(--btn-primary-fg); }
+
+/* ══ HERO ══ */
+.hero {
+  min-height: 88vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 7.5rem 2rem 5rem;
+  background: var(--hero-bg);
+}
+.hero-logo {
+  width: min(156px, 36vw);
+  margin-bottom: 1.85rem;
+  filter: var(--logo-filter);
+  opacity: 0.9;
+  transition: filter 0.25s ease;
+}
+.hero-kicker {
+  font-size: 0.75rem; font-weight: 600; color: var(--mid);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.85rem;
+}
+.hero-title {
+  font-size: clamp(2.25rem, 5.2vw, 4.2rem); font-weight: 600;
+  line-height: 1.08; letter-spacing: -0.035em; color: var(--fg);
+  margin-bottom: 1.25rem; max-width: 780px;
+}
+.hero-sub {
+  font-size: clamp(0.98rem, 1.6vw, 1.12rem); font-weight: 300;
+  color: var(--mid); line-height: 1.75; max-width: 650px; margin-bottom: 2.35rem;
+}
+.hero-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.btn-dark {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.68rem 1.45rem; background: var(--fg); color: var(--btn-primary-fg);
+  font-size: 0.82rem; font-weight: 500; border-radius: 980px;
+  text-decoration: none; border: none; cursor: pointer; font-family: var(--font);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-dark:hover { opacity: 0.84; }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.68rem 1.45rem; background: transparent; color: var(--fg);
+  font-size: 0.82rem; font-weight: 500; border-radius: 980px;
+  border: 1px solid var(--border); text-decoration: none; cursor: pointer;
+  font-family: var(--font); transition: border-color 0.15s;
+}
+.btn-ghost:hover { border-color: #999; }
+
+hr { border: none; border-top: 1px solid var(--border); }
+
+/* ══ SECTION HEADINGS & FILTER TABS ══ */
+.catalog-section {
+  padding: 6.5rem 2rem;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.section-top-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.sec-kicker {
+  font-size: 0.68rem; font-weight: 600; color: var(--mid);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.55rem;
+}
+.sec-title {
+  font-size: clamp(1.85rem, 4vw, 2.65rem); font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1.1; color: var(--fg); margin-bottom: 0.6rem;
+}
+.sec-body {
+  font-size: 0.92rem; font-weight: 300; color: var(--mid);
+  line-height: 1.7; max-width: 480px;
+}
+
+.filter-tabs {
+  display: inline-flex;
+  align-items: center;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 980px;
+  padding: 3px;
+  gap: 2px;
+  flex-wrap: wrap;
+}
+.filter-tab {
+  border: none;
+  background: transparent;
+  color: var(--mid);
+  font-family: var(--font);
+  font-size: 0.74rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 980px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.filter-tab:hover { color: var(--fg); }
+.filter-tab.active {
+  background: var(--fg);
+  color: var(--btn-primary-fg);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   APPLE APP STORE SHOWCASE CARDS
+   ══════════════════════════════════════════════════════════════════════════ */
+.appstore-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.75rem;
+}
+
+.today-card {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  color: #ffffff;
+  background: #0d0d11;
+  box-shadow:
+    0 20px 44px -14px rgba(0, 0, 0, 0.26),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.38s var(--spring), box-shadow 0.38s var(--spring);
+  will-change: transform;
+}
+.today-card.featured {
+  grid-column: 1 / -1;
+  min-height: 390px;
+}
+.today-card:hover {
+  transform: translateY(-5px) scale(1.006);
+  box-shadow:
+    0 28px 60px -12px rgba(0, 0, 0, 0.36),
+    0 8px 20px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+.today-card:active {
+  transform: scale(0.98);
+}
+.today-card.is-expanding-source {
+  opacity: 0 !important;
+  pointer-events: none;
+  transition: none !important;
+}
+
+.today-card-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.65s var(--spring);
+}
+.today-card:hover .today-card-art {
+  transform: scale(1.03);
+}
+.today-card-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 6, 10, 0.48) 0%,
+    rgba(6, 6, 10, 0.28) 42%,
+    rgba(6, 6, 10, 0.82) 100%
+  );
+}
+
+.today-card-top {
+  position: relative;
+  z-index: 2;
+  padding: 2rem 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  flex: 1;
+}
+.today-card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.today-card-kicker {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+.today-card-year-badge {
+  font-size: 0.66rem;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 980px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.today-card-copy {
+  margin-top: 2.25rem;
+  max-width: 540px;
+}
+.today-card-title {
+  font-size: clamp(1.55rem, 2.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 0.55rem;
+}
+.today-card.featured .today-card-title {
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
+}
+.today-card-headline {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.74);
+  line-height: 1.55;
+}
+
+.today-card-dock {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.65rem;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.today-dock-left {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+.app-squircle {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+}
+.app-squircle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.today-dock-info {
+  min-width: 0;
+}
+.today-dock-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.12rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.today-dock-sub {
+  font-size: 0.73rem;
+  color: rgba(255, 255, 255, 0.58);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.appstore-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 16px;
+  border-radius: 980px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: var(--font);
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  transition: background 0.15s, transform 0.15s;
+}
+.today-card:hover .appstore-pill-btn {
+  background: rgba(255, 255, 255, 0.24);
+}
+.appstore-pill-btn.free {
+  background: #ffffff;
+  color: #0071e3;
+  border-color: #ffffff;
+}
+.today-card:hover .appstore-pill-btn.free {
+  background: #f0f6ff;
+}
+.appstore-pill-btn.paid {
+  background: #0071e3;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.today-card:hover .appstore-pill-btn.paid {
+  background: #0077ed;
+}
+.appstore-pill-btn.arch {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.55);
+  border-color: transparent;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   EXPANDED FULL-PAGE MODAL (APPLE APP STORE MORPH)
+   ══════════════════════════════════════════════════════════════════════════ */
+.appstore-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(8, 8, 12, 0.54);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--spring);
+}
+.appstore-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.appstore-modal-card {
+  position: fixed;
+  z-index: 910;
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255,255,255,0.12);
+  display: none;
+  will-change: top, left, width, height, border-radius;
+}
+.appstore-modal-card.is-open {
+  display: block;
+}
+
+.appstore-modal-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.appstore-modal-card.is-scrollable .appstore-modal-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 50;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 20, 24, 0.55);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+.modal-close-btn:hover {
+  background: rgba(35, 35, 42, 0.8);
+  transform: scale(1.06);
+}
+.modal-close-btn:active {
+  transform: scale(0.94);
+}
+.modal-close-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+}
+
+/* Modal Top Hero Banner */
+.modal-hero {
+  position: relative;
+  padding: 2.75rem 2.5rem 2.25rem;
+  color: #ffffff;
+  overflow: hidden;
+}
+.modal-hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+.modal-hero-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,6,10,0.45) 0%, rgba(6,6,10,0.82) 100%);
+}
+.modal-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+.modal-hero-top {
+  max-width: 620px;
+  padding-right: 2.5rem;
+}
+.modal-kicker {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 0.55rem;
+}
+.modal-title {
+  font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1.08;
+  margin-bottom: 0.5rem;
+}
+.modal-headline {
+  font-size: 0.96rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.55;
+}
+
+.modal-identity-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.modal-identity-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.modal-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 18px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.25);
+  overflow: hidden;
+}
+.modal-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.modal-author-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.modal-author-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+.modal-author-role {
+  font-size: 0.76rem;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.modal-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.62rem 1.35rem;
+  border-radius: 980px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: #0071e3;
+  color: #fff;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.modal-action-link:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+.modal-status-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.2rem;
+  border-radius: 980px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 2rem 2.5rem 3rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease 0.1s, transform 0.35s var(--spring) 0.1s;
+}
+.appstore-modal-card.content-visible .modal-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 1. App Store Horizontal Specs Strip */
+.specs-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem 1rem;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 2.25rem;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  padding-right: 0.5rem;
+}
+.spec-label {
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--mid);
+  margin-bottom: 0.3rem;
+}
+.spec-value {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--fg);
+  line-height: 1.3;
+}
+.spec-value.empty-val {
+  color: #a1a1aa;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+.spec-sub {
+  font-size: 0.7rem;
+  color: var(--mid);
+  margin-top: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Modal Sections */
+.modal-sec {
+  margin-bottom: 2.25rem;
+}
+.modal-sec:last-child {
+  margin-bottom: 0;
+}
+.modal-sec-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  margin-bottom: 0.85rem;
+}
+.modal-text {
+  font-size: 0.94rem;
+  font-weight: 300;
+  color: var(--fg);
+  line-height: 1.8;
+}
+.empty-inline {
+  font-size: 0.84rem;
+  color: var(--mid);
+  padding: 1.25rem 1.4rem;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+/* Screenshots Track */
+.screenshots-track {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+}
+.screenshot-item {
+  flex: 0 0 auto;
+  height: 260px;
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0d0d11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.screenshot-item img {
+  height: 100%;
+  width: auto;
+  max-width: min(520px, 82vw);
+  object-fit: contain;
+  display: block;
+}
+
+/* Features Grid */
+.modal-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+}
+.modal-feat-cell {
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.3rem 1.4rem;
+}
+.modal-feat-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.3rem;
+}
+.modal-feat-desc {
+  font-size: 0.8rem;
+  color: var(--mid);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Dedicated Author / Developer Segment with Logo inside Modal */
+.author-segment-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 1.35rem 1.5rem;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.author-segment-left {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+.author-logo-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: var(--box-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.author-logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: var(--logo-filter);
+  transform: scale(1.22);
+}
+.author-segment-info h5 {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.2rem;
+}
+.author-segment-info p {
+  font-size: 0.78rem;
+  color: var(--mid);
+}
+.author-segment-badge {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--mid);
+  padding: 5px 12px;
+  border-radius: 980px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+/* Download Options / Sources Segment (below Author segment) */
+.download-sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.download-source-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 1.15rem 1.4rem;
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--fg);
+  transition: border-color 0.18s, transform 0.2s var(--spring), background 0.18s;
+}
+.download-source-card:hover {
+  border-color: var(--source-hover-border);
+  background: var(--source-hover-bg);
+  transform: translateY(-1px);
+}
+.download-source-left {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  min-width: 0;
+}
+.download-source-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: var(--box-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--fg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+.download-source-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 1.9;
+}
+.download-source-info {
+  min-width: 0;
+}
+.download-source-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.15rem;
+}
+.download-source-sub {
+  font-size: 0.76rem;
+  color: var(--mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.download-source-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.56rem 1.2rem;
+  border-radius: 980px;
+  background: var(--blue);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.download-source-card:hover .download-source-action {
+  background: #0077ed;
+}
+
+/* Bottom Information Specs Table */
+.info-table {
+  border-top: 1px solid var(--border);
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.83rem;
+  gap: 1rem;
+}
+.info-row-label {
+  color: var(--mid);
+}
+.info-row-val {
+  color: var(--fg);
+  font-weight: 500;
+  text-align: right;
+}
+.info-row-val.empty-val {
+  color: #a1a1aa;
+  font-weight: 400;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STUDIO PROFILE & RESUME SECTION (#about)
+   ══════════════════════════════════════════════════════════════════════════ */
+.about-section {
+  padding: 7rem 2rem;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.resume-intro-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3.5rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+.about-body p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+}
+.about-body p:last-child {
+  margin-bottom: 0;
+}
+.stats-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.stat-cell {
+  background: var(--subtle);
+  padding: 1.65rem 1.45rem;
+}
+.stat-num {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.35rem;
+}
+.stat-label {
+  font-size: 0.74rem;
+  color: var(--mid);
+  line-height: 1.4;
+}
+
+/* Resume Sub-Blocks */
+.resume-sub-header {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mid);
+  margin: 3.75rem 0 1.25rem;
+}
+
+/* Core Disciplines Grid */
+.disciplines-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.15rem;
+}
+.discipline-card {
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.75rem 1.85rem;
+  transition: transform 0.25s var(--spring), border-color 0.2s;
+}
+.discipline-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--source-hover-border);
+}
+.discipline-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 0.55rem;
+}
+.discipline-title {
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 0.45rem;
+}
+.discipline-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* Timeline List */
+.timeline-list {
+  border-top: 1px solid var(--border);
+}
+.timeline-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 2rem;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.timeline-period {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+}
+.timeline-title {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 0.3rem;
+}
+.timeline-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* Tech Stack Bar */
+.tech-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.tech-tag {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--fg);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 980px;
+  background: var(--subtle);
+}
+
+/* ══ CONTACT & FOOTER ══ */
+.contact-wrap { background: var(--subtle); padding: 7rem 2rem; text-align: center; border-top: 1px solid var(--border); }
+.contact-inner { max-width: 440px; margin: 0 auto; }
+.contact-title { font-size: clamp(1.75rem,3.8vw,2.6rem); font-weight: 600; letter-spacing: -0.025em; color: var(--fg); margin-bottom: 0.75rem; }
+.contact-desc { font-size: 0.9rem; font-weight: 300; color: var(--mid); line-height: 1.7; margin-bottom: 1.85rem; }
+
+footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 980px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.footer-logo img { height: 26px; filter: var(--logo-filter); opacity: 0.32; }
+.footer-copy { font-size: 0.68rem; color: var(--mid); max-width: 440px; line-height: 1.5; }
+
+/* FADE IN */
+.fade { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.fade.in { opacity: 1; transform: none; }
+
+@media (max-width: 820px) {
+  .resume-intro-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+  .disciplines-grid { grid-template-columns: 1fr; }
+  .timeline-row { grid-template-columns: 1fr; gap: 0.35rem; }
+  .appstore-grid { grid-template-columns: 1fr; }
+  .specs-ribbon { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  nav { padding: 0 1.25rem; }
+  .nav-links { display: none; }
+  .modal-hero { padding: 2.25rem 1.35rem 1.65rem; }
+  .modal-body { padding: 1.5rem 1.35rem 2.25rem; }
+  .today-card-top { padding: 1.5rem 1.4rem 1.15rem; }
+  .today-card-dock { padding: 0.9rem 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-left">
+    <a href="#" style="text-decoration:none">
+      <img class="nav-logo-img" src="logo.png" alt="Evenyou">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#games" data-en="Games" data-ru="Игры">Games</a></li>
+      <li><a href="#software" data-en="Software & OS" data-ru="Программы и ОС">Software & OS</a></li>
+      <li><a href="#about" data-en="Studio" data-ru="О студии">Studio</a></li>
+      <li><a href="#contact" data-en="Contact" data-ru="Контакт">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-controls">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+      <svg id="theme-icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg id="theme-icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+    <div class="lang-toggle">
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <img src="logo.png" class="hero-logo fade" alt="Evenyou Studio">
+  <p class="hero-kicker fade" id="hero-kicker"></p>
+  <h1 class="hero-title fade" id="hero-title"></h1>
+  <p class="hero-sub fade" id="hero-sub"></p>
+  <div class="hero-actions fade">
+    <a href="#games" class="btn-dark" data-en="Explore Games" data-ru="Наши игры">Наши игры</a>
+    <a href="#software" class="btn-ghost" data-en="Explore Software" data-ru="Программы и ОС">Программы и ОС</a>
+  </div>
+</section>
+
+<hr>
+
+<!-- ══ GAMES SECTION ══ -->
+<div class="catalog-section" id="games">
+  <div class="section-top-bar">
+    <div>
+      <p class="sec-kicker fade" data-en="Games" data-ru="Игры">Games</p>
+      <h2 class="sec-title fade" data-en="Our Games." data-ru="Наши игры.">Our Games.</h2>
+      <p class="sec-body fade"
+        data-en="Different genres. Different ideas. Different ways to play."
+        data-ru="Разные жанры. Разные идеи. Разное ощущение от каждой игры.">
+        Different genres. Different ideas. Different ways to play.
+      </p>
+    </div>
+    <div class="filter-tabs fade" id="games-filter">
+      <button class="filter-tab active" data-filter="all" onclick="setGameFilter('all')" data-en="All" data-ru="Все">All</button>
+      <button class="filter-tab" data-filter="paid" onclick="setGameFilter('paid')" data-en="Paid" data-ru="Платные">Paid</button>
+      <button class="filter-tab" data-filter="free" onclick="setGameFilter('free')" data-en="Free" data-ru="Бесплатные">Free</button>
+      <button class="filter-tab" data-filter="dev" onclick="setGameFilter('dev')" data-en="In Development" data-ru="В разработке">In Development</button>
+    </div>
+  </div>
+
+  <div class="appstore-grid" id="games-grid"></div>
+</div>
+
+<hr>
+
+<!-- ══ SOFTWARE & OS SECTION ══ -->
+<div class="catalog-section" id="software">
+  <div class="section-top-bar">
+    <div>
+      <p class="sec-kicker fade" data-en="Systems & Tools" data-ru="Системы и утилиты">Systems & Tools</p>
+      <h2 class="sec-title fade" data-en="Software & OS." data-ru="Программы и ОС.">Software & OS.</h2>
+      <p class="sec-body fade"
+        data-en="Tools, interfaces, experiments, and software built beyond games."
+        data-ru="Инструменты, интерфейсы, концепты операционных систем и софт за пределами игр.">
+        Tools, interfaces, experiments, and software built beyond games.
+      </p>
+    </div>
+  </div>
+
+  <div class="appstore-grid" id="software-grid"></div>
+</div>
+
+<hr>
+
+<!-- ══ STUDIO PROFILE & CAPABILITIES (#about) ══ -->
+<div class="about-section" id="about">
+  <p class="sec-kicker fade" data-en="Studio & Capabilities" data-ru="О студии и направлениях">Studio & Capabilities</p>
+  <h2 class="sec-title fade" id="about-title"></h2>
+
+  <div class="resume-intro-grid">
+    <div class="about-body fade" id="about-paragraphs"></div>
+    <div class="stats-block fade" id="about-stats"></div>
+  </div>
+
+  <p class="resume-sub-header fade" data-en="Capabilities" data-ru="Ключевые направления разработки">Capabilities</p>
+  <div class="disciplines-grid" id="about-disciplines"></div>
+
+  <p class="resume-sub-header fade" data-en="Development Timeline" data-ru="Хронология развития">Development Timeline</p>
+  <div class="timeline-list" id="about-timeline"></div>
+
+  <p class="resume-sub-header fade" data-en="Technology" data-ru="Технологии">Technology</p>
+  <div class="tech-wrap fade" id="about-tech"></div>
+</div>
+
+<!-- ══ CONTACT ══ -->
+<div class="contact-wrap" id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-title fade" data-en="Let's build something." data-ru="Поговорим.">Let's build something.</h2>
+    <p class="contact-desc fade"
+      data-en="For collaboration, publishing, playtesting, project inquiries, or simply saying hi."
+      data-ru="Сотрудничество, плейтест, издательство или обратная связь.">
+      For collaboration, publishing, playtesting, project inquiries, or simply saying hi.
+    </p>
+    <a href="mailto:feedplay.team@gmail.com" id="contact-email" class="btn-dark fade">feedplay.team@gmail.com</a>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo"><img src="logo.png" alt="Evenyou"></div>
+  <p class="footer-copy"
+     data-en="© 2026 Evenyou Studio · All rights reserved."
+     data-ru="© 2026 Evenyou Studio · Все права защищены.">
+     © 2026 Evenyou Studio · All rights reserved.
+  </p>
+</footer>
+
+<!-- ══ EXPANDED PROJECT MODAL ══ -->
+<div class="appstore-backdrop" id="appstore-backdrop" onclick="closeProjectModal()"></div>
+<div class="appstore-modal-card" id="appstore-modal" role="dialog" aria-modal="true">
+  <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <div class="appstore-modal-scroll" id="appstore-modal-scroll">
+    <div id="appstore-modal-content"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+  let currentLang = 'ru';
+  let currentGameFilter = 'all';
+  let activeProject = null;
+  let activeSourceCardEl = null;
+  let isAnimatingModal = false;
+
+  // Platform Logos
+  const PLATFORM_SVGS = {
+    windows: `<svg class="plat-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.45L10.94 4.3v7.12H3V5.45zm0 13.1l7.94 1.15v-7.18H3v6.03zm8.82 1.28L21 21.2v-8.68h-9.18v7.31zm0-15.66v7.25H21V2.8l-9.18 1.37z"/></svg>`,
+    android: `<svg class="plat-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 11.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 7.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C3.48 13.13 1.5 16.05 1.22 19.5h21.56c-.28-3.45-2.26-6.37-5.18-8.02zM7.5 16.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm9 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>`,
+    web: `<svg class="plat-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="fill:none"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 0 0 0 18M12 3a14.5 14.5 0 0 1 0 18"/></svg>`
+  };
+
+  function withPlatformLogos(str) {
+    if (!str) return '';
+    let out = String(str).replace(/\s*/g, '');
+    out = out.replace(/\b(Windows|macOS|Mac|iOS|Android|WebGL)\b/g, match => {
+      if (match === 'Windows') {
+        return `<span class="plat-inline">${PLATFORM_SVGS.windows}<span>Windows</span></span>`;
+      }
+      if (match === 'macOS' || match === 'Mac' || match === 'iOS') {
+        return `${match}`;
+      }
+      if (match === 'Android') {
+        return `<span class="plat-inline">${PLATFORM_SVGS.android}<span>Android</span></span>`;
+      }
+      if (match === 'WebGL') {
+        return `<span class="plat-inline">${PLATFORM_SVGS.web}<span>WebGL</span></span>`;
+      }
+      return match;
+    });
+    return out;
+  }
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    const moon = document.getElementById('theme-icon-moon');
+    const sun = document.getElementById('theme-icon-sun');
+    if (moon && sun) {
+      moon.style.display = theme === 'dark' ? 'none' : 'block';
+      sun.style.display = theme === 'dark' ? 'block' : 'none';
+    }
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    try { localStorage.setItem('evenyou-theme', next); } catch (e) {}
+    applyTheme(next);
+  }
+
+  (function initTheme() {
+    let saved = null;
+    try { saved = localStorage.getItem('evenyou-theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') {
+      applyTheme(saved);
+    }
+  })();
+
+  function t(val, fallbackEn = 'Not provided', fallbackRu = 'Не предоставлено') {
+    if (val === null || val === undefined || val === '') {
+      return currentLang === 'ru' ? fallbackRu : fallbackEn;
+    }
+    if (typeof val === 'object') {
+      const text = val[currentLang] ?? val.en ?? val.ru ?? '';
+      if (!text || text.trim() === '') {
+        return currentLang === 'ru' ? fallbackRu : fallbackEn;
+      }
+      return text;
+    }
+    return String(val);
+  }
+
+  function isEmptyField(val) {
+    if (val === null || val === undefined || val === '') return true;
+    if (typeof val === 'object') {
+      const text = val[currentLang] ?? val.en ?? val.ru ?? '';
+      return !text || text.trim() === '';
+    }
+    return false;
+  }
+
+  function getBannerStyle(item) {
+    if (item.banner && item.banner.image) {
+      return `background-image: url('${item.banner.image}');`;
+    }
+    if (item.banner && item.banner.bg) {
+      return `background: ${item.banner.bg};`;
+    }
+    const accent = item.icon?.color || '#818cf8';
+    const baseBg = item.icon?.bg || 'linear-gradient(160deg, #16161d 0%, #09090d 100%)';
+    return `background: radial-gradient(ellipse 75% 65% at 85% 0%, ${accent}28, transparent 70%), ${baseBg};`;
+  }
+
+  // Returns whoever made the game/project (defaults to Evenyou Studio)
+  function getProjectAuthor(item) {
+    if (item.author && !isEmptyField(item.author)) return t(item.author);
+    if (item.specs?.author && !isEmptyField(item.specs.author)) return t(item.specs.author);
+    return t(window.SITE_DATA.studio?.author, 'Evenyou Studio', 'Evenyou Studio');
+  }
+
+  function getProjectAuthorLogo(item) {
+    if (item.authorLogo && item.authorLogo.trim() !== '') return item.authorLogo;
+    return window.SITE_DATA.studio?.logo || 'logo.png';
+  }
+
+  function getProjectPriceLabel(item) {
+    if (item.specs && !isEmptyField(item.specs.price)) {
+      return t(item.specs.price);
+    }
+    if (item.pricing === 'paid' || item.status?.type === 'paid') {
+      return currentLang === 'ru' ? 'Платная' : 'Paid';
+    }
+    if (item.pricing === 'free' || item.status?.type === 'free') {
+      return currentLang === 'ru' ? 'Бесплатно' : 'Free';
+    }
+    if (item.status?.type === 'concept') {
+      return currentLang === 'ru' ? 'Концепт' : 'Concept';
+    }
+    if (item.status?.type === 'arch' || item.pricing === 'arch') {
+      return currentLang === 'ru' ? 'Архив' : 'Archived';
+    }
+    return null;
+  }
+
+  function getSourceSubtitle(lnk) {
+    let host = '';
+    if (lnk.url) {
+      try {
+        host = new URL(lnk.url).hostname.replace(/^www\./, '');
+      } catch (e) {
+        host = lnk.url;
+      }
+    }
+    if (lnk.source && !isEmptyField(lnk.source)) {
+      return host ? `${t(lnk.source)} · ${host}` : t(lnk.source);
+    }
+    return host || (currentLang === 'ru' ? 'Внешний источник' : 'External source');
+  }
+
+  function renderCardHtml(item) {
+    const iconContent = item.icon && item.icon.image
+      ? `<img src="${item.icon.image}" alt="${t(item.name)}">`
+      : (item.icon && item.icon.text ? item.icon.text : t(item.name).slice(0, 2).toUpperCase());
+
+    const bannerStyle = getBannerStyle(item);
+    const statusType = item.status?.type || item.pricing || 'dev';
+    const btnText = t(item.status?.label, 'Open', 'Открыть');
+    const authorName = getProjectAuthor(item);
+    const platformSub = item.specs?.platform ? `${authorName} · ${withPlatformLogos(t(item.specs.platform))}` : authorName;
+    const yearBadge = item.specs?.year ? `<span class="today-card-year-badge">${t(item.specs.year)}</span>` : '';
+
+    return `
+      <article class="today-card ${item.featured && currentGameFilter === 'all' ? 'featured' : ''} fade"
+               data-project-id="${item.id}"
+               onclick="openProjectById('${item.id}', this)">
+        <div class="today-card-art" style="${bannerStyle}"></div>
+        <div class="today-card-top">
+          <div class="today-card-meta-row">
+            <span class="today-card-kicker">${withPlatformLogos(t(item.kicker))}</span>
+            ${yearBadge}
+          </div>
+          <div class="today-card-copy">
+            <h3 class="today-card-title">${t(item.name)}</h3>
+            <p class="today-card-headline">${t(item.headline)}</p>
+          </div>
+        </div>
+        <div class="today-card-dock">
+          <div class="today-dock-left">
+            <div class="app-squircle" style="background:${item.icon?.bg || '#1d1d1f'};color:${item.icon?.color || '#fff'}">
+              ${iconContent}
+            </div>
+            <div class="today-dock-info">
+              <p class="today-dock-name">${t(item.name)}</p>
+              <p class="today-dock-sub">${platformSub}</p>
+            </div>
+          </div>
+          <span class="appstore-pill-btn ${statusType}">${btnText}</span>
+        </div>
+      </article>
+    `;
+  }
+
+  function setGameFilter(filter) {
+    currentGameFilter = filter;
+    document.querySelectorAll('#games-filter .filter-tab').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-filter') === filter);
+    });
+    renderSite();
+  }
+
+  function matchesGameFilter(game, filter) {
+    if (filter === 'all') return true;
+    if (filter === 'paid') {
+      return game.pricing === 'paid' || game.status?.type === 'paid';
+    }
+    if (filter === 'free') {
+      return game.pricing === 'free' || game.status?.type === 'free';
+    }
+    if (filter === 'dev') {
+      const labelEn = typeof game.status?.label === 'object' ? (game.status.label.en || '') : String(game.status?.label || '');
+      return game.status?.type === 'dev' || labelEn.toLowerCase().includes('dev');
+    }
+    return true;
+  }
+
+  function renderSite() {
+    const data = window.SITE_DATA;
+    if (!data) return;
+
+    // 1. Hero & Studio Profile
+    document.getElementById('hero-kicker').innerHTML = t(data.studio.heroKicker || data.studio.location);
+    document.getElementById('hero-title').innerHTML = t(data.studio.heroTitle);
+    document.getElementById('hero-sub').innerHTML = t(data.studio.heroSub);
+    document.getElementById('about-title').innerHTML = t(data.studio.aboutTitle);
+
+    document.getElementById('about-paragraphs').innerHTML = (data.studio.aboutParagraphs || [])
+      .map(p => `<p>${t(p)}</p>`)
+      .join('');
+
+    document.getElementById('about-stats').innerHTML = (data.studio.stats || [])
+      .map(s => `<div class="stat-cell"><div class="stat-num">${s.num}</div><div class="stat-label">${withPlatformLogos(t(s.label))}</div></div>`)
+      .join('');
+
+    const disciplinesEl = document.getElementById('about-disciplines');
+    if (disciplinesEl) {
+      disciplinesEl.innerHTML = (data.studio.disciplines || []).map(d => `
+        <div class="discipline-card fade">
+          <p class="discipline-tag">${t(d.tag)}</p>
+          <h3 class="discipline-title">${t(d.title)}</h3>
+          <p class="discipline-desc">${withPlatformLogos(t(d.desc))}</p>
+        </div>
+      `).join('');
+    }
+
+    const timelineEl = document.getElementById('about-timeline');
+    if (timelineEl) {
+      timelineEl.innerHTML = (data.studio.timeline || []).map(row => `
+        <div class="timeline-row fade">
+          <div class="timeline-period">${t(row.period)}</div>
+          <div>
+            <p class="timeline-title">${withPlatformLogos(t(row.title))}</p>
+            <p class="timeline-desc">${withPlatformLogos(t(row.desc))}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('about-tech').innerHTML = (data.studio.techStack || [])
+      .map(tag => `<span class="tech-tag">${withPlatformLogos(tag)}</span>`)
+      .join('');
+
+    if (data.studio.email) {
+      const emailEl = document.getElementById('contact-email');
+      emailEl.href = `mailto:${data.studio.email}`;
+      emailEl.textContent = data.studio.email;
+    }
+
+    // 2. Games Grid
+    const allGames = data.games || [];
+    const filteredGames = allGames.filter(g => matchesGameFilter(g, currentGameFilter));
+    document.getElementById('games-grid').innerHTML = filteredGames.map(renderCardHtml).join('');
+
+    // 3. Software & OS Grid
+    const allSoftware = data.software || data.concepts || [];
+    document.getElementById('software-grid').innerHTML = allSoftware.map(renderCardHtml).join('');
+
+    // Static translations
+    document.querySelectorAll('[data-' + currentLang + ']').forEach(el => {
+      const val = el.getAttribute('data-' + currentLang);
+      if (el.tagName === 'INPUT' || el.tagName === 'BUTTON') {
+        el.value = val;
+        el.textContent = val;
+      } else {
+        el.innerHTML = val;
+      }
+    });
+
+    observeFades();
+
+    if (activeProject) {
+      renderModalInnerHtml(activeProject);
+    }
+  }
+
+  function findProjectById(id) {
+    const data = window.SITE_DATA;
+    return (data.games || []).find(g => g.id === id) ||
+           (data.software || []).find(s => s.id === id) ||
+           (data.concepts || []).find(c => c.id === id);
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // RENDER FULL-PAGE MODAL CONTENT
+  // ══════════════════════════════════════════════════════════════════════════
+  function renderModalInnerHtml(project) {
+    const isRu = currentLang === 'ru';
+    const notProvided = isRu ? 'Не предоставлено' : 'Not provided';
+
+    const iconContent = project.icon && project.icon.image
+      ? `<img src="${project.icon.image}" alt="${t(project.name)}">`
+      : (project.icon && project.icon.text ? project.icon.text : t(project.name).slice(0, 2).toUpperCase());
+
+    const bannerStyle = getBannerStyle(project);
+    const authorName = getProjectAuthor(project);
+    const authorLogo = getProjectAuthorLogo(project);
+    const priceLabel = getProjectPriceLabel(project);
+    const statusLabel = project.status?.label ? t(project.status.label) : notProvided;
+
+    const links = project.links || project.downloads || [];
+    let actionsHtml = '';
+    if (links.length > 0) {
+      actionsHtml = links.map(lnk => `
+        <a href="${lnk.url}" target="_blank" rel="noopener noreferrer" class="modal-action-link">
+          <span>${t(lnk.label, 'Open', 'Открыть')}</span>
+          <span>↗</span>
+        </a>
+      `).join('');
+    } else {
+      actionsHtml = `<span class="modal-status-tag">${statusLabel}</span>`;
+    }
+
+    const specs = project.specs || {};
+    const downloadSize = specs.downloadSize ?? specs.size ?? null;
+    const installSize = specs.installSize ?? null;
+
+    const renderSpec = (labelEn, labelRu, val, subText = '', withLogos = false) => {
+      const empty = isEmptyField(val);
+      const renderedVal = empty ? notProvided : (withLogos ? withPlatformLogos(t(val)) : t(val));
+      return `
+        <div class="spec-item">
+          <span class="spec-label">${isRu ? labelRu : labelEn}</span>
+          <span class="spec-value ${empty ? 'empty-val' : ''}">${renderedVal}</span>
+          ${subText ? `<span class="spec-sub">${subText}</span>` : ''}
+        </div>
+      `;
+    };
+
+    // Screenshots
+    const shots = project.screenshots || [];
+    const screenshotsHtml = shots.length === 0
+      ? `<div class="empty-inline">${isRu ? 'Скриншоты не предоставлены' : 'Screenshots not provided'}</div>`
+      : `<div class="screenshots-track">
+          ${shots.map(shot => {
+            const src = typeof shot === 'string' ? shot : shot.src;
+            return `<div class="screenshot-item"><img src="${src}" alt="${t(project.name)}" loading="lazy"></div>`;
+          }).join('')}
+         </div>`;
+
+    // Description
+    const descHtml = isEmptyField(project.description)
+      ? `<div class="empty-inline">${isRu ? 'Описание не предоставлено' : 'Description not provided'}</div>`
+      : `<p class="modal-text">${t(project.description)}</p>`;
+
+    // Features
+    const feats = project.features || [];
+    const featuresHtml = feats.length === 0
+      ? `<div class="empty-inline">${isRu ? 'Особенности не предоставлены' : 'Features not provided'}</div>`
+      : `<div class="modal-features">
+          ${feats.map(f => `
+            <div class="modal-feat-cell">
+              <p class="modal-feat-title">${t(f.title, notProvided, notProvided)}</p>
+              <p class="modal-feat-desc">${t(f.desc, notProvided, notProvided)}</p>
+            </div>
+          `).join('')}
+         </div>`;
+
+    // Dev note
+    const devHtml = isEmptyField(project.devNote)
+      ? `<div class="empty-inline">${isRu ? 'Статус разработки не предоставлен' : 'Development status not provided'}</div>`
+      : `<p class="modal-text">${withPlatformLogos(t(project.devNote))}</p>`;
+
+    // Download Options / Sources (below Author segment)
+    const downloadSourcesHtml = links.length === 0
+      ? `<div class="empty-inline">${isRu ? 'Источники загрузки не предоставлены' : 'Download sources not provided'}</div>`
+      : `<div class="download-sources-list">
+          ${links.map(lnk => `
+            <a href="${lnk.url}" target="_blank" rel="noopener noreferrer" class="download-source-card">
+              <div class="download-source-left">
+                <div class="download-source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                </div>
+                <div class="download-source-info">
+                  <p class="download-source-title">${t(lnk.label, 'Download / Open', 'Скачать / Перейти')}</p>
+                  <p class="download-source-sub">${getSourceSubtitle(lnk)}</p>
+                </div>
+              </div>
+              <span class="download-source-action">
+                <span>${isRu ? 'Перейти' : 'Open Link'}</span>
+                <span>↗</span>
+              </span>
+            </a>
+          `).join('')}
+         </div>`;
+
+    const renderInfoRow = (labelEn, labelRu, val, withLogos = false) => {
+      const empty = isEmptyField(val);
+      const renderedVal = empty ? notProvided : (withLogos ? withPlatformLogos(t(val)) : t(val));
+      return `
+        <div class="info-row">
+          <span class="info-row-label">${isRu ? labelRu : labelEn}</span>
+          <span class="info-row-val ${empty ? 'empty-val' : ''}">${renderedVal}</span>
+        </div>
+      `;
+    };
+
+    document.getElementById('appstore-modal-content').innerHTML = `
+      <div class="modal-hero">
+        <div class="modal-hero-art" style="${bannerStyle}"></div>
+        <div class="modal-hero-inner">
+          <div class="modal-hero-top">
+            <p class="modal-kicker">${withPlatformLogos(t(project.kicker))}</p>
+            <h2 class="modal-title">${t(project.name)}</h2>
+            <p class="modal-headline">${t(project.headline)}</p>
+          </div>
+          <div class="modal-identity-bar">
+            <div class="modal-identity-left">
+              <div class="modal-icon" style="background:${project.icon?.bg || '#1d1d1f'};color:${project.icon?.color || '#fff'}">
+                ${iconContent}
+              </div>
+              <div class="modal-author-meta">
+                <span class="modal-author-name">${authorName}</span>
+                <span class="modal-author-role">${withPlatformLogos(t(specs.platform, 'Cross-platform', 'Кроссплатформа'))}</span>
+              </div>
+            </div>
+            <div class="modal-header-actions">
+              ${actionsHtml}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="specs-ribbon">
+          ${renderSpec('Developer', 'Разработчик', authorName)}
+          ${renderSpec('Price', 'Категория цены', priceLabel)}
+          ${renderSpec('Genre', 'Жанр', specs.genre)}
+          ${renderSpec('Platform', 'Платформа', specs.platform, '', true)}
+          ${renderSpec('Year', 'Год', specs.year)}
+          ${renderSpec('Language', 'Язык', specs.language)}
+          ${renderSpec('Download Size', 'Вес для скачивания', downloadSize)}
+          ${renderSpec('Install Size', 'Вес для установки', installSize)}
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'Скриншоты и превью' : 'Screenshots & Preview'}</p>
+          ${screenshotsHtml}
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'О проекте' : 'About'}</p>
+          ${descHtml}
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'Ключевые особенности' : 'Key Features'}</p>
+          ${featuresHtml}
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'Статус разработки' : 'Development Status'}</p>
+          ${devHtml}
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'Разработчик' : 'Developer'}</p>
+          <div class="author-segment-card">
+            <div class="author-segment-left">
+              <div class="author-logo-box">
+                <img src="${authorLogo}" alt="${authorName}">
+              </div>
+              <div class="author-segment-info">
+                <h5>${authorName}</h5>
+                <p>${t(window.SITE_DATA.studio?.location)}</p>
+              </div>
+            </div>
+            <span class="author-segment-badge">${isRu ? 'In-House проект' : 'In-House Production'}</span>
+          </div>
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'Варианты загрузки (источники)' : 'Download Options (Sources)'}</p>
+          ${downloadSourcesHtml}
+        </div>
+
+        <div class="modal-sec">
+          <p class="modal-sec-label">${isRu ? 'Все характеристики' : 'Specifications'}</p>
+          <div class="info-table">
+            ${renderInfoRow('Developer', 'Разработчик', authorName)}
+            ${renderInfoRow('Status', 'Статус проекта', statusLabel)}
+            ${renderInfoRow('Price Model', 'Модель распространения', priceLabel)}
+            ${renderInfoRow('Genre / Category', 'Жанр / Категория', specs.genre)}
+            ${renderInfoRow('Platform', 'Платформа', specs.platform, true)}
+            ${renderInfoRow('Release Year', 'Год релиза', specs.year)}
+            ${renderInfoRow('Languages', 'Языки интерфейса', specs.language)}
+            ${renderInfoRow('Age Rating', 'Возрастной рейтинг', specs.age)}
+            ${renderInfoRow('Download Size', 'Вес для скачивания', downloadSize)}
+            ${renderInfoRow('Install Size', 'Вес для установки', installSize)}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // FLIP CARD-TO-MODAL ANIMATION
+  // ══════════════════════════════════════════════════════════════════════════
+  function getTargetModalGeometry() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    if (vw <= 640) {
+      return { top: 0, left: 0, width: vw, height: vh, borderRadius: 0 };
+    }
+    const width = Math.min(860, vw - 48);
+    const height = Math.min(820, vh - 48);
+    const left = Math.round((vw - width) / 2);
+    const top = Math.round((vh - height) / 2);
+    return { top, left, width, height, borderRadius: 26 };
+  }
+
+  function openProjectById(projectId, sourceEl) {
+    if (isAnimatingModal) return;
+    const project = findProjectById(projectId);
+    if (!project) return;
+
+    activeProject = project;
+    activeSourceCardEl = sourceEl ? sourceEl.closest('.today-card') || sourceEl : null;
+
+    const modal = document.getElementById('appstore-modal');
+    const scrollBox = document.getElementById('appstore-modal-scroll');
+    const backdrop = document.getElementById('appstore-backdrop');
+
+    renderModalInnerHtml(project);
+
+    const startRect = activeSourceCardEl
+      ? activeSourceCardEl.getBoundingClientRect()
+      : { top: window.innerHeight / 2 - 120, left: window.innerWidth / 2 - 180, width: 360, height: 240 };
+
+    isAnimatingModal = true;
+    document.body.classList.add('modal-open');
+
+    if (activeSourceCardEl) {
+      activeSourceCardEl.classList.add('is-expanding-source');
+    }
+
+    modal.style.transition = 'none';
+    modal.classList.remove('content-visible', 'is-scrollable');
+    modal.classList.add('is-open');
+    scrollBox.scrollTop = 0;
+
+    modal.style.top = `${startRect.top}px`;
+    modal.style.left = `${startRect.left}px`;
+    modal.style.width = `${startRect.width}px`;
+    modal.style.height = `${startRect.height}px`;
+    modal.style.borderRadius = '26px';
+
+    void modal.offsetWidth;
+
+    const target = getTargetModalGeometry();
+    backdrop.classList.add('active');
+
+    modal.style.transition = `
+      top 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      left 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      width 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+      border-radius 0.52s cubic-bezier(0.22, 1, 0.36, 1)
+    `;
+
+    modal.style.top = `${target.top}px`;
+    modal.style.left = `${target.left}px`;
+    modal.style.width = `${target.width}px`;
+    modal.style.height = `${target.height}px`;
+    modal.style.borderRadius = `${target.borderRadius}px`;
+
+    modal.classList.add('content-visible');
+
+    setTimeout(() => {
+      modal.classList.add('is-scrollable');
+      isAnimatingModal = false;
+    }, 500);
+  }
+
+  function closeProjectModal() {
+    if (!activeProject || isAnimatingModal) return;
+    isAnimatingModal = true;
+
+    const modal = document.getElementById('appstore-modal');
+    const scrollBox = document.getElementById('appstore-modal-scroll');
+    const backdrop = document.getElementById('appstore-backdrop');
+
+    modal.classList.remove('content-visible', 'is-scrollable');
+    scrollBox.scrollTo({ top: 0, behavior: 'instant' });
+    backdrop.classList.remove('active');
+
+    let endRect = null;
+    if (activeSourceCardEl && document.body.contains(activeSourceCardEl)) {
+      endRect = activeSourceCardEl.getBoundingClientRect();
+    }
+
+    if (endRect && endRect.bottom > 0 && endRect.top < window.innerHeight) {
+      modal.style.transition = `
+        top 0.44s cubic-bezier(0.22, 1, 0.36, 1),
+        left 0.44s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.44s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.44s cubic-bezier(0.22, 1, 0.36, 1),
+        border-radius 0.44s cubic-bezier(0.22, 1, 0.36, 1)
+      `;
+      modal.style.top = `${endRect.top}px`;
+      modal.style.left = `${endRect.left}px`;
+      modal.style.width = `${endRect.width}px`;
+      modal.style.height = `${endRect.height}px`;
+      modal.style.borderRadius = '26px';
+    } else {
+      modal.style.transition = 'transform 0.3s ease, opacity 0.28s ease';
+      modal.style.transform = 'scale(0.95)';
+      modal.style.opacity = '0';
+    }
+
+    setTimeout(() => {
+      modal.classList.remove('is-open');
+      modal.style.transition = 'none';
+      modal.style.transform = '';
+      modal.style.opacity = '';
+      if (activeSourceCardEl) {
+        activeSourceCardEl.classList.remove('is-expanding-source');
+      }
+      document.body.classList.remove('modal-open');
+      activeProject = null;
+      activeSourceCardEl = null;
+      isAnimatingModal = false;
+    }, 430);
+  }
+
+  window.addEventListener('resize', () => {
+    if (!activeProject || isAnimatingModal) return;
+    const modal = document.getElementById('appstore-modal');
+    const target = getTargetModalGeometry();
+    modal.style.transition = 'none';
+    modal.style.top = `${target.top}px`;
+    modal.style.left = `${target.left}px`;
+    modal.style.width = `${target.width}px`;
+    modal.style.height = `${target.height}px`;
+    modal.style.borderRadius = `${target.borderRadius}px`;
+  });
+
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && activeProject) {
+      closeProjectModal();
+    }
+  });
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b =>
+      b.classList.toggle('active', b.textContent.toLowerCase() === lang)
+    );
+    renderSite();
+  }
+
+  let fadeObserver = null;
+  function observeFades() {
+    if (!fadeObserver) {
+      fadeObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            fadeObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.07 });
+    }
+    document.querySelectorAll('.fade:not(.in)').forEach((el, i) => {
+      el.style.transitionDelay = ((i % 4) * 55) + 'ms';
+      fadeObserver.observe(el);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', renderSite);
+</script>
+</body>
+</html>
