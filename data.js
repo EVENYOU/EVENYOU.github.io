@@ -1,10 +1,10 @@
 /**
  * ============================================================================
- * БАЗА ДАННЫХ САЙТА — EVENYOU ENTERTAINMENT (data.js)
+ * БАЗА ДАННЫХ САЙТА — EVENYOU STUDIO (data.js)
  * ============================================================================
  * 
  * Здесь хранятся:
- * 1. `studio`   — Информация о студии и авторе
+ * 1. `studio`   — Информация о студии Evenyou Studio
  * 2. `games`    — Раздел «Игры» (Games)
  * 3. `software` — Раздел «Программы и ОС» (Software & OS)
  * 
@@ -19,61 +19,13 @@
  * - "dev"     — В разработке (In Development)
  * - "concept" — Концепт (Concept)
  * - "arch"    — Архив (Archived)
- * 
- * ----------------------------------------------------------------------------
- * ШАБЛОН ПРОЕКТА (для `games` или `software`):
- * ----------------------------------------------------------------------------
- * {
- *   id: "my-project",
- *   featured: false, // true — карточка во всю ширину, false — обычная
- *   pricing: "paid", // "paid" | "free" | "arch" (для фильтрации и плашки цены)
- *   name: "Название проекта",
- *   kicker: { en: "Genre or Type · Platform", ru: "Жанр или тип · Платформа" },
- *   headline: {
- *     en: "Short one-line description.",
- *     ru: "Короткое описание в одну строку."
- *   },
- *   icon: {
- *     text: "MP",
- *     image: "", // Путь к иконке (например "img/icon.png"), если есть
- *     bg: "#1d1d1f",
- *     color: "#ffffff"
- *   },
- *   banner: {
- *     image: "" // Путь к обложке карточки, если есть
- *   },
- *   status: {
- *     type: "paid", // "paid", "free", "dev", "concept", "arch"
- *     label: { en: "Paid · $4.99", ru: "Платно · $4.99" }
- *   },
- *   specs: {
- *     price: { en: "Paid", ru: "Платная" },
- *     genre: { en: "Action", ru: "Экшен" },
- *     platform: "Windows, Mac",
- *     year: "2025",
- *     language: "RU, EN",
- *     downloadSize: null, // Вес для скачивания (например "450 MB")
- *     installSize: null,  // Вес для установки (например "1.2 GB")
- *     age: "12+"
- *   },
- *   screenshots: [],
- *   description: { en: "", ru: "" },
- *   features: [
- *     // { title: { en: "Feature", ru: "Особенность" }, desc: { en: "Details", ru: "Описание" } }
- *   ],
- *   devNote: { en: "", ru: "" },
- *   links: [
- *     // Варианты загрузки (источники) — отображаются в шапке и ниже сегмента автора:
- *     // { label: { en: "Get it on GameJolt", ru: "Скачать на GameJolt" }, source: "Game Jolt", url: "https://..." }
- *   ]
- * }
  * ============================================================================
  */
 
 window.SITE_DATA = {
 
   // ══════════════════════════════════════════════════════════════════════════
-  // 1. ОБО МНЕ И О СТУДИИ (HERO & RESUME)
+  // 1. О СТУДИИ (HERO & STUDIO PROFILE)
   // ══════════════════════════════════════════════════════════════════════════
   studio: {
     name: "Evenyou Studio",
@@ -81,72 +33,88 @@ window.SITE_DATA = {
     logo: "logo.png",
     email: "feedplay.team@gmail.com",
     location: {
-      en: "",
-      ru: ""
+      en: "Independent game & software studio",
+      ru: "Независимая студия игр и ПО"
     },
     heroKicker: {
-      en: "About Me",
-      ru: "Обо мне"
+      en: "Independent studio · Est. 2020s",
+      ru: "Независимая студия · Est. 2020s"
     },
     heroTitle: {
-      en: "Hi. I'm a programmer<br>and game designer.",
-      ru: "Привет. Я программист<br>и геймдизайнер."
+      en: "Independent games<br>& software.",
+      ru: "Независимые игры<br>и софт."
     },
     heroSub: {
-      en: "I create games and interactive projects, building them completely solo (almost) — from writing code to crafting mechanics and the player experience. I like combining strict logic with creativity: not just writing scripts, but designing rules, details, and how a game will feel.",
-      ru: "Создаю игры и интерактивные проекты, собирая их полностью самостоятельно (почти) — от написания кода до проработки механик и игрового опыта. Мне нравится совмещать строгую логику с творчеством: не просто писать скрипты, а продумывать правила, детали и то, как игра будет ощущаться."
+      en: "We build games, software, and experimental digital projects — each one exploring a different idea, genre, or feeling.",
+      ru: "Мы создаём видеоигры, программное обеспечение и экспериментальные цифровые проекты — каждый из которых исследует новую идею, жанр или ощущение."
     },
     aboutTitle: {
-      en: "Full-cycle independent<br>development.",
-      ru: "Полный цикл независимой<br>разработки."
+      en: "About Evenyou Studio.",
+      ru: "Об Evenyou Studio."
     },
     aboutParagraphs: [
       {
-        en: "I create games and interactive projects completely solo under Evenyou Studio — from writing code and architecture to designing mechanics, 3D visuals, and sound.",
-        ru: "Создаю игры и интерактивные проекты, собирая их полностью самостоятельно — от написания кода до проработки механик и игрового опыта."
+        en: "Evenyou Studio is an independent studio building video games, software, and experimental digital projects.",
+        ru: "Evenyou Studio — независимая студия, создающая видеоигры, программное обеспечение и экспериментальные цифровые проекты."
       },
       {
-        en: "I love combining strict logic with creativity: not just writing scripts, but thinking through the rules, subtle details, and how every project actually feels to play and use.",
-        ru: "Мне нравится совмещать строгую логику с творчеством: не просто писать скрипты, а продумывать правила, детали и то, как игра будет ощущаться."
+        en: "We don't follow a single genre or format. Each project is an opportunity to explore a new idea, technology, or feeling.",
+        ru: "Мы не придерживаемся одного жанра или формата. Каждый проект — возможность исследовать новую идею, технологию или ощущение."
       }
     ],
     stats: [
-      { num: "6+", label: { en: "Games & Prototypes", ru: "Игр и прототипов" } },
-      { num: "4", label: { en: "Core Disciplines", ru: "Направления (Код, 3D, UI, Звук)" } },
-      { num: "100%", label: { en: "In-house Production", ru: "Собственная разработка" } },
-      { num: "PC · Mobile", label: { en: "Target Platforms", ru: "Windows, macOS, Android" } }
+      { num: "Independent", label: { en: "Independent studio and self-directed vision", ru: "Независимая студия и собственное видение" } },
+      { num: "Small-scale", label: { en: "Small-scale development with attention to detail", ru: "Камерная разработка с вниманием к деталям" } },
+      { num: "Experimental", label: { en: "Different genres, mechanics, and formats", ru: "Разные жанры, механики и форматы" } },
+      { num: "Cross-platform", label: { en: "Projects for Windows, macOS, Android, iOS & Web", ru: "Проекты для Windows, macOS, Android, iOS и Web" } }
     ],
     disciplines: [
       {
-        tag: { en: "01 · Engineering", ru: "01 · Инженерия и код" },
-        title: { en: "Game Systems & AI", ru: "Игровые системы и ИИ" },
+        tag: { en: "01 · Games", ru: "01 · Игры" },
+        title: { en: "Game Development", ru: "Game Development" },
         desc: {
-          en: " Complex behavioral AI, active procedural ragdoll physics, custom shaders, and gameplay architecture built on Unity (including Unity 6 URP) and C#.",
-          ru: "Адаптивный ИИ с системой состояний, процедурная физика активного рэгдолла, кастомные механики взаимодействия с ОС и архитектура на Unity 6 (URP) и C#."
+          en: "Atmospheric horror, physics-driven sandboxes, and arcade projects built on Unity and C#.",
+          ru: "Атмосферные хорроры, физические песочницы и аркадные игры на базе Unity и C#."
         }
       },
       {
-        tag: { en: "02 · Software & Cloud", ru: "02 · Софт и облако" },
-        title: { en: "Apps, Backend & OS Design", ru: "Приложения, бэкенд и ОС" },
+        tag: { en: "02 · Software", ru: "02 · Программы" },
+        title: { en: "Software Development", ru: "Software Development" },
         desc: {
-          en: "Cross-platform applications with Flutter / Dart, Python automation & data processing, PlayFab cloud backends, and minimalist OS architecture.",
-          ru: "Кроссплатформенная разработка на Flutter и Dart, инструменты на Python, работа с Big Data, облачные сервисы PlayFab и проектирование систем EvenOS."
+          en: "Local-first utilities, audio software, and clean cross-platform applications built with Flutter and Dart.",
+          ru: "Локальные утилиты, аудио-программы и кроссплатформенные приложения на Flutter и Dart."
         }
       },
       {
-        tag: { en: "03 · Visuals & UX", ru: "03 · Визуал и интерфейсы" },
-        title: { en: "3D Modeling & Product UI", ru: "3D-графика и UI/UX дизайн" },
+        tag: { en: "03 · Design", ru: "03 · Интерфейсы" },
+        title: { en: "UI / UX", ru: "UI / UX" },
         desc: {
-          en: "3D asset creation, lighting, and atmosphere in Blender paired with clean, functional, Apple-inspired interface systems.",
-          ru: "Моделирование и сборка сцен в Blender, работа со светом и пост-обработкой, а также чистый продуктовый дизайн интерфейсов."
+          en: "Minimalist interface systems, desktop and mobile OS concepts (EvenOS), and distraction-free ergonomics.",
+          ru: "Минималистичные интерфейсные системы, концепты операционных сред EvenOS и чистая продуктовая эргономика."
         }
       },
       {
-        tag: { en: "04 · Audio", ru: "04 · Звук и музыка" },
-        title: { en: "Sound Design & Scoring", ru: "Саунд-дизайн и композиция" },
+        tag: { en: "04 · Experiments", ru: "04 · Эксперименты" },
+        title: { en: "Interactive Experiences", ru: "Interactive Experiences" },
         desc: {
-          en: "Original dark ambient soundtracks, spatial horror audio cues, and procedural soundscapes produced in Logic Pro and FL Studio.",
-          ru: "Написание оригинальных саундтреков, давящего эмбиента и пространственных звуковых эффектов в Logic Pro и FL Studio."
+          en: "Fourth-wall-breaking desktop narratives, procedural active-ragdoll physics, and digital experiments.",
+          ru: "Проекты с разрушением четвёртой стены, процедурная физика активного рэгдолла и цифровые эксперименты."
+        }
+      },
+      {
+        tag: { en: "05 · Web", ru: "05 · Веб" },
+        title: { en: "Web", ru: "Web" },
+        desc: {
+          en: "Fast, lightweight web interfaces, project showcases, and browser-accessible WebGL builds.",
+          ru: "Быстрые и минималистичные веб-интерфейсы, интерактивные витрины и браузерные сборки на WebGL."
+        }
+      },
+      {
+        tag: { en: "06 · Mobile", ru: "06 · Мобайл" },
+        title: { en: "Mobile", ru: "Mobile" },
+        desc: {
+          en: "Responsive one-thumb mobile games and ergonomic mobile interfaces for Android and iOS.",
+          ru: "Мобильные игры с отзывчивым управлением одной рукой и интерфейсы для Android и iOS."
         }
       }
     ],
@@ -154,40 +122,46 @@ window.SITE_DATA = {
       {
         period: "2025 – 2026",
         title: {
-          en: "Flagship Horror Titles & EvenOS Ecosystem",
-          ru: "Флагманские хоррор-проекты и экосистема EvenOS"
+          en: "SCREEN, RagMania, EvenAudio & EvenOS",
+          ru: "SCREEN, RagMania, EvenAudio и экосистема EvenOS"
         },
         desc: {
-          en: "Active development of psychological thriller SCREEN, Unity 6 survival horror Love Me or Rot, physics sandbox RagMania, and EvenOS concepts.",
-          ru: "Разработка триллера SCREEN, сурвайвал-хоррора Love Me or Rot на Unity 6 (URP), физической песочницы RagMania и концептов EvenOS."
+          en: "Active development of psychological thriller SCREEN, physics sandbox RagMania, local music player EvenAudio, and EvenOS desktop/mobile concepts.",
+          ru: "Разработка психологического триллера SCREEN, физической песочницы RagMania, локального плеера EvenAudio и концептов EvenOS."
         }
       },
       {
         period: "2024",
         title: {
-          en: "Public Releases on PC & Google Play",
-          ru: "Релизы на ПК и в Google Play"
+          en: "Public Releases on Windows, macOS & Android",
+          ru: "Релизы на Windows, macOS и Android"
         },
         desc: {
-          en: "Shipped tactical survival horror The Endless Night at Freddy's on Game Jolt and mobile arcade BrainRot Jumper on Android.",
-          ru: "Выпуск тактического хоррора The Endless Night at Freddy's на Game Jolt и мобильного аркадного платформера BrainRot Jumper в Google Play."
+          en: "Shipped tactical survival horror The Endless Night at Freddy's on Game Jolt & Itch.io and mobile arcade BrainRot Jumper on Android.",
+          ru: "Выпуск тактического хоррора The Endless Night at Freddy's на Game Jolt и Itch.io, а также мобильного платформера BrainRot Jumper на Android."
         }
       },
       {
         period: "2022 – 2023",
         title: {
-          en: "Cloud Architecture & Early R&D",
-          ru: "Облачная архитектура и R&D-прототипы"
+          en: "Cloud Architecture & Early Prototypes",
+          ru: "Облачная архитектура и ранние прототипы"
         },
         desc: {
-          en: "Built early prototypes (Best Way) focusing on PlayFab cloud saves, player telemetry, authentication, and live leaderboards.",
-          ru: "Создание ранних проектов и прототипов (Best Way) с облачными сохранениями, авторизацией и таблицами лидеров на базе PlayFab."
+          en: "Built early studio prototypes (Sempai's Nightmare, Best Way) focusing on PlayFab cloud saves, authentication, and live leaderboards.",
+          ru: "Создание ранних проектов и прототипов студии (Sempai's Nightmare, Best Way) с облачными сохранениями, авторизацией и таблицами лидеров."
         }
       }
     ],
     techStack: [
-      "Unity 6 (URP)", "C#", "Python", "Flutter / Dart", "Blender",
-      "Logic Pro", "FL Studio", "Big Data", "Google Play", "PlayFab"
+      "Unity",
+      "C#",
+      "Flutter",
+      "Dart",
+      "HTML / CSS / JavaScript",
+      "Git",
+      "Android",
+      "WebGL"
     ]
   },
 
@@ -201,8 +175,8 @@ window.SITE_DATA = {
       pricing: "paid",
       name: "SCREEN",
       kicker: {
-        en: "Psychological Horror · Windows, Mac, Android, iOS",
-        ru: "Психологический хоррор · Windows, Mac, Android, iOS"
+        en: "Psychological Horror · Windows, macOS, Android, iOS",
+        ru: "Психологический хоррор · Windows, macOS, Android, iOS"
       },
       headline: {
         en: "NullPath watches every move you make.",
@@ -235,11 +209,24 @@ window.SITE_DATA = {
         ru: "SCREEN — психологический триллер, ломающий четвёртую стену, где местом действия становится экран твоего компьютера. Система NullPath наблюдает за каждым открытым окном и каждым решением."
       },
       features: [
-        
+        {
+          title: { en: "Fourth-Wall Interaction", ru: "Разрушение четвёртой стены" },
+          desc: {
+            en: "Your desktop environment and system windows become the setting of the story.",
+            ru: "Рабочий стол и системные окна становятся непосредственным местом действия."
+          }
+        },
+        {
+          title: { en: "NullPath Surveillance", ru: "Наблюдение NullPath" },
+          desc: {
+            en: "Every window you open and every choice you make is tracked by the system.",
+            ru: "Каждое открытое окно и каждое действие отслеживается системой NullPath."
+          }
+        }
       ],
       devNote: {
-        en: "Commercial flagship title in active development for Windows and macOS. Planned release in 2025.",
-        ru: "Коммерческий флагманский проект в активной разработке для Windows и macOS. Релиз запланирован на 2025 год."
+        en: "In active development for Windows, macOS, Android, and iOS.",
+        ru: "Проект в активной разработке для Windows, macOS, Android и iOS."
       },
       links: []
     },
@@ -250,8 +237,8 @@ window.SITE_DATA = {
       pricing: "free",
       name: "The Endless Night at Freddy's",
       kicker: {
-        en: "Tactical Horror · PC, macOS",
-        ru: "Тактический хоррор · PC, macOS"
+        en: "Tactical Horror · Windows, macOS",
+        ru: "Тактический хоррор · Windows, macOS"
       },
       headline: {
         en: "Survive an unforgiving night where every watt of power counts.",
@@ -271,8 +258,8 @@ window.SITE_DATA = {
       specs: {
         price: { en: "Free", ru: "Бесплатно" },
         genre: { en: "Tactical Horror", ru: "Тактический хоррор" },
-        platform: "PC (Windows), macOS",
-        year: "2026",
+        platform: "Windows, macOS",
+        year: "2024",
         language: "EN, RU",
         downloadSize: "175 MB",
         installSize: ">500 MB",
@@ -307,8 +294,8 @@ window.SITE_DATA = {
         }
       ],
       devNote: {
-        en: "Released and available for free on Game Jolt.",
-        ru: "Проект завершён и бесплатно доступен на Game Jolt."
+        en: "Released and available for free on Game Jolt and Itch.io.",
+        ru: "Проект завершён и бесплатно доступен на Game Jolt и Itch.io."
       },
       links: [
         {
@@ -327,11 +314,11 @@ window.SITE_DATA = {
     {
       id: "brainrot-jumper",
       featured: false,
-      pricing: "arch",
+      pricing: "free",
       name: "BrainRot Jumper",
       kicker: {
         en: "Casual Arcade · Android",
-        ru: "Казуалка · Android"
+        ru: "Казуальная аркада · Android"
       },
       headline: {
         en: "Fast vertical arcade action built for quick mobile sessions.",
@@ -388,9 +375,7 @@ window.SITE_DATA = {
         en: "Request beta test on feedplay.team@gmail.com.",
         ru: "Запросите бета тест на feedplay.team@gmail.com."
       },
-      links: [
-       
-      ]
+      links: []
     },
 
     {
@@ -399,8 +384,8 @@ window.SITE_DATA = {
       pricing: "paid",
       name: "RagMania",
       kicker: {
-        en: "Physics Sandbox · PC",
-        ru: "Физическая песочница · PC"
+        en: "Physics Sandbox · Windows",
+        ru: "Физическая песочница · Windows"
       },
       headline: {
         en: "Active-ragdoll chaos, contraptions, and emergent physics.",
@@ -420,7 +405,7 @@ window.SITE_DATA = {
       specs: {
         price: { en: "Paid", ru: "Платная" },
         genre: { en: "Physics Sandbox", ru: "Песочница" },
-        platform: "PC (Windows)",
+        platform: "Windows",
         year: "TBA",
         language: "EN, RU",
         downloadSize: null,
@@ -449,8 +434,8 @@ window.SITE_DATA = {
         }
       ],
       devNote: {
-        en: "Currently refining physics stability and sandbox tools for PC release.",
-        ru: "Идёт доработка стабильности физических связей и набора инструментов для релиза на ПК."
+        en: "Currently refining physics stability and sandbox tools for Windows release.",
+        ru: "Идёт доработка стабильности физических связей и набора инструментов для релиза на Windows."
       },
       links: []
     },
@@ -461,8 +446,8 @@ window.SITE_DATA = {
       pricing: "arch",
       name: "Sempai's Nightmare: The Deadly Pursuit",
       kicker: {
-        en: "PlayFab · Cloud · Canceled",
-        ru: "PlayFab · Cloud · Отменено"
+        en: "PlayFab · Cloud · Windows, Android",
+        ru: "PlayFab · Cloud · Windows, Android"
       },
       headline: {
         en: "Early experiments with cloud backends and prototypes.",
@@ -482,7 +467,7 @@ window.SITE_DATA = {
       specs: {
         price: { en: "Archived", ru: "Архив" },
         genre: { en: "R&D / Prototypes", ru: "R&D / Прототипы" },
-        platform: "PC / Android",
+        platform: "Windows, Android",
         year: "2022–2023",
         language: "RU, EN",
         downloadSize: null,
@@ -513,13 +498,75 @@ window.SITE_DATA = {
         ru: "В архиве как часть ранней истории студии."
       },
       links: []
-    },
+    }
   ],
 
   // ══════════════════════════════════════════════════════════════════════════
   // 3. ПРОГРАММЫ И ОС (SOFTWARE & OS)
   // ══════════════════════════════════════════════════════════════════════════
   software: [
+    {
+      id: "evenaudio",
+      featured: true,
+      pricing: "free",
+      name: "EvenAudio",
+      kicker: {
+        en: "Software · Flutter · Windows, macOS, Android",
+        ru: "Софт · Flutter · Windows, macOS, Android"
+      },
+      headline: {
+        en: "A simple local music player built around ownership, convenience, and control.",
+        ru: "Простой локальный музыкальный плеер, построенный вокруг удобства и контроля."
+      },
+      icon: {
+        text: "EA",
+        image: "",
+        bg: "linear-gradient(135deg, #211638, #0e0a1a)",
+        color: "#c4b5fd"
+      },
+      banner: { image: "" },
+      status: {
+        type: "dev",
+        label: { en: "In Development", ru: "В разработке" }
+      },
+      specs: {
+        price: { en: "Free", ru: "Бесплатно" },
+        genre: { en: "Music Player", ru: "Аудиоплеер" },
+        platform: "Windows, macOS, Android",
+        year: "2025–2026",
+        language: "EN, RU",
+        downloadSize: null,
+        installSize: null,
+        age: null
+      },
+      screenshots: [],
+      description: {
+        en: "EvenAudio is a simple local music player built around ownership, convenience, and control. Designed for clean, distraction-free listening without subscriptions or cloud bloat.",
+        ru: "EvenAudio — лаконичный локальный музыкальный плеер, созданный вокруг контроля над своей фонотекой и удобства. Без подписок, лишнего шума и фоновой телеметрии."
+      },
+      features: [
+        {
+          title: { en: "Local Library Ownership", ru: "Своя локальная медиатека" },
+          desc: {
+            en: "Direct playback of your local audio files with zero cloud dependency.",
+            ru: "Прямое воспроизведение локальных аудиофайлов без привязки к облаку."
+          }
+        },
+        {
+          title: { en: "Built with Flutter", ru: "Разработано на Flutter" },
+          desc: {
+            en: "Fast, minimal interface across desktop and mobile platforms.",
+            ru: "Быстрый и минималистичный интерфейс для десктопных и мобильных платформ."
+          }
+        }
+      ],
+      devNote: {
+        en: "In active development with Flutter and Dart.",
+        ru: "В активной разработке на базе Flutter и Dart."
+      },
+      links: []
+    },
+
     {
       id: "evenos",
       featured: false,
@@ -595,8 +642,8 @@ window.SITE_DATA = {
       pricing: "free",
       name: "EvenOS Mobile",
       kicker: {
-        en: "Mobile Environment · Concept",
-        ru: "Мобильная ОС · Концепт"
+        en: "Mobile Environment · Concept · Android, iOS",
+        ru: "Мобильная ОС · Концепт · Android, iOS"
       },
       headline: {
         en: "A phone that works for you, not against you.",
@@ -616,7 +663,7 @@ window.SITE_DATA = {
       specs: {
         price: { en: "Concept", ru: "Концепт" },
         genre: { en: "Mobile OS", ru: "Мобильная ОС" },
-        platform: "Mobile",
+        platform: "Android, iOS",
         year: "2025–2026",
         language: "EN, RU",
         downloadSize: null,
