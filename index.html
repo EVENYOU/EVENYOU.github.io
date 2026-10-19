@@ -4,7 +4,8 @@
   <meta name="google-site-verification" content="KTz4pNzSuNgv5fvCFLjmEw36-d3pKYWiQUFtPi8AGfc" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introducing Evenyou</title>
+<title>Evenyou Studio</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,8 +16,33 @@
   --subtle: #f5f5f7;
   --border: #e5e5ea;
   --blue: #0071e3;
+  --nav-bg: rgba(255, 255, 255, 0.86);
+  --nav-border: rgba(0, 0, 0, 0.06);
+  --hero-bg: radial-gradient(ellipse 80% 50% at 50% 0%, #f5f5f7 0%, #ffffff 70%);
+  --logo-filter: brightness(0);
+  --box-bg: #ffffff;
+  --source-hover-bg: #efeff4;
+  --source-hover-border: #c7c7cc;
+  --btn-primary-fg: #ffffff;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
   --spring: cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-theme="dark"] {
+  --bg: #000000;
+  --fg: #f5f5f7;
+  --mid: #86868b;
+  --subtle: #141417;
+  --border: rgba(255, 255, 255, 0.11);
+  --blue: #0071e3;
+  --nav-bg: rgba(12, 12, 15, 0.82);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --hero-bg: radial-gradient(ellipse 80% 50% at 50% 0%, #15151d 0%, #000000 70%);
+  --logo-filter: brightness(0) invert(1);
+  --box-bg: #1c1c21;
+  --source-hover-bg: #1e1e24;
+  --source-hover-border: rgba(255, 255, 255, 0.22);
+  --btn-primary-fg: #000000;
+  color-scheme: dark;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -25,27 +51,46 @@ body {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 body.modal-open { overflow: hidden; }
+
+/* Inline Platform Logos */
+.plat-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24em;
+  white-space: nowrap;
+}
+.plat-svg {
+  width: 0.92em;
+  height: 0.92em;
+  display: inline-block;
+  vertical-align: -0.1em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
 
 /* ══ NAV ══ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: 64px; display: flex; align-items: center; justify-content: space-between;
   padding: 0 2rem;
-  background: rgba(255,255,255,0.86);
+  background: var(--nav-bg);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid var(--nav-border);
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
 .nav-left { display: flex; align-items: center; gap: 2.75rem; }
 .nav-logo-img {
   height: 48px;
   width: auto;
   display: block;
-  filter: brightness(0);
+  filter: var(--logo-filter);
   transform: scale(1.26);
   transform-origin: left center;
+  transition: filter 0.25s ease;
 }
 .nav-links { display: flex; gap: 1.75rem; list-style: none; }
 .nav-links a {
@@ -53,6 +98,34 @@ nav {
   text-decoration: none; opacity: 0.72; transition: opacity 0.15s;
 }
 .nav-links a:hover { opacity: 1; }
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.theme-toggle {
+  width: 30px;
+  height: 30px;
+  border-radius: 980px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, opacity 0.15s;
+}
+.theme-toggle:hover {
+  background: var(--subtle);
+}
+.theme-toggle svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  fill: none;
+}
 .lang-toggle {
   display: flex; align-items: center;
   border: 1px solid var(--border); border-radius: 980px; overflow: hidden;
@@ -63,16 +136,22 @@ nav {
   color: var(--mid); font-size: 0.72rem; font-weight: 500; font-family: var(--font);
   transition: background 0.15s, color 0.15s;
 }
-.lang-btn.active { background: var(--fg); color: #fff; }
+.lang-btn.active { background: var(--fg); color: var(--btn-primary-fg); }
 
 /* ══ HERO ══ */
 .hero {
   min-height: 88vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center; text-align: center;
   padding: 7.5rem 2rem 5rem;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, #f5f5f7 0%, #ffffff 70%);
+  background: var(--hero-bg);
 }
-.hero-logo { width: min(156px, 36vw); margin-bottom: 1.85rem; filter: brightness(0); opacity: 0.9; }
+.hero-logo {
+  width: min(156px, 36vw);
+  margin-bottom: 1.85rem;
+  filter: var(--logo-filter);
+  opacity: 0.9;
+  transition: filter 0.25s ease;
+}
 .hero-kicker {
   font-size: 0.75rem; font-weight: 600; color: var(--mid);
   letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.85rem;
@@ -89,7 +168,7 @@ nav {
 .hero-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 .btn-dark {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.68rem 1.45rem; background: var(--fg); color: #fff;
+  padding: 0.68rem 1.45rem; background: var(--fg); color: var(--btn-primary-fg);
   font-size: 0.82rem; font-weight: 500; border-radius: 980px;
   text-decoration: none; border: none; cursor: pointer; font-family: var(--font);
   transition: opacity 0.15s, transform 0.15s;
@@ -157,7 +236,7 @@ hr { border: none; border-top: 1px solid var(--border); }
 .filter-tab:hover { color: var(--fg); }
 .filter-tab.active {
   background: var(--fg);
-  color: #ffffff;
+  color: var(--btn-primary-fg);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -765,7 +844,7 @@ hr { border: none; border-top: 1px solid var(--border); }
   width: 72px;
   height: 72px;
   border-radius: 18px;
-  background: #ffffff;
+  background: var(--box-bg);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -779,7 +858,7 @@ hr { border: none; border-top: 1px solid var(--border); }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0);
+  filter: var(--logo-filter);
   transform: scale(1.22);
 }
 .author-segment-info h5 {
@@ -823,8 +902,8 @@ hr { border: none; border-top: 1px solid var(--border); }
   transition: border-color 0.18s, transform 0.2s var(--spring), background 0.18s;
 }
 .download-source-card:hover {
-  border-color: #c7c7cc;
-  background: #efeff4;
+  border-color: var(--source-hover-border);
+  background: var(--source-hover-bg);
   transform: translateY(-1px);
 }
 .download-source-left {
@@ -837,7 +916,7 @@ hr { border: none; border-top: 1px solid var(--border); }
   width: 46px;
   height: 46px;
   border-radius: 13px;
-  background: #ffffff;
+  background: var(--box-bg);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -947,14 +1026,14 @@ hr { border: none; border-top: 1px solid var(--border); }
 }
 .stat-cell {
   background: var(--subtle);
-  padding: 1.75rem 1.5rem;
+  padding: 1.65rem 1.45rem;
 }
 .stat-num {
-  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
   font-weight: 600;
   color: var(--fg);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   margin-bottom: 0.35rem;
 }
 .stat-label {
@@ -973,7 +1052,7 @@ hr { border: none; border-top: 1px solid var(--border); }
   margin: 3.75rem 0 1.25rem;
 }
 
-/* Core Disciplines 2x2 Bento Grid */
+/* Core Disciplines Grid */
 .disciplines-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -988,7 +1067,7 @@ hr { border: none; border-top: 1px solid var(--border); }
 }
 .discipline-card:hover {
   transform: translateY(-2px);
-  border-color: #d0d0d7;
+  border-color: var(--source-hover-border);
 }
 .discipline-tag {
   font-size: 0.68rem;
@@ -1066,7 +1145,7 @@ hr { border: none; border-top: 1px solid var(--border); }
 .contact-desc { font-size: 0.9rem; font-weight: 300; color: var(--mid); line-height: 1.7; margin-bottom: 1.85rem; }
 
 footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 980px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.footer-logo img { height: 26px; filter: brightness(0); opacity: 0.28; }
+.footer-logo img { height: 26px; filter: var(--logo-filter); opacity: 0.32; }
 .footer-copy { font-size: 0.68rem; color: var(--mid); max-width: 440px; line-height: 1.5; }
 
 /* FADE IN */
@@ -1101,13 +1180,31 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     <ul class="nav-links">
       <li><a href="#games" data-en="Games" data-ru="Игры">Games</a></li>
       <li><a href="#software" data-en="Software & OS" data-ru="Программы и ОС">Software & OS</a></li>
-      <li><a href="#about" data-en="Studio & Resume" data-ru="О студии">Studio & Resume</a></li>
+      <li><a href="#about" data-en="Studio" data-ru="О студии">Studio</a></li>
       <li><a href="#contact" data-en="Contact" data-ru="Контакт">Contact</a></li>
     </ul>
   </div>
-  <div class="lang-toggle">
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
-    <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+  <div class="nav-controls">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+      <svg id="theme-icon-moon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg id="theme-icon-sun" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+    <div class="lang-toggle">
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+    </div>
   </div>
 </nav>
 
@@ -1118,8 +1215,8 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
   <h1 class="hero-title fade" id="hero-title"></h1>
   <p class="hero-sub fade" id="hero-sub"></p>
   <div class="hero-actions fade">
-    <a href="#games" class="btn-dark" data-en="Our Games" data-ru="Наши игры">Наши игры</a>
-    <a href="#software" class="btn-ghost" data-en="Software & OS" data-ru="Программы и ОС">Программы и ОС</a>
+    <a href="#games" class="btn-dark" data-en="Explore Games" data-ru="Наши игры">Наши игры</a>
+    <a href="#software" class="btn-ghost" data-en="Explore Software" data-ru="Программы и ОС">Программы и ОС</a>
   </div>
 </section>
 
@@ -1132,16 +1229,16 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
       <p class="sec-kicker fade" data-en="Games" data-ru="Игры">Games</p>
       <h2 class="sec-title fade" data-en="Our Games." data-ru="Наши игры.">Our Games.</h2>
       <p class="sec-body fade"
-        data-en="Each project is a different genre, a different risk, a different feeling we're chasing."
-        data-ru="Каждый проект — разный жанр, разный риск, разное ощущение.">
-        Each project is a different genre, a different risk, a different feeling we're chasing.
+        data-en="Different genres. Different ideas. Different ways to play."
+        data-ru="Разные жанры. Разные идеи. Разное ощущение от каждой игры.">
+        Different genres. Different ideas. Different ways to play.
       </p>
     </div>
     <div class="filter-tabs fade" id="games-filter">
       <button class="filter-tab active" data-filter="all" onclick="setGameFilter('all')" data-en="All" data-ru="Все">All</button>
       <button class="filter-tab" data-filter="paid" onclick="setGameFilter('paid')" data-en="Paid" data-ru="Платные">Paid</button>
       <button class="filter-tab" data-filter="free" onclick="setGameFilter('free')" data-en="Free" data-ru="Бесплатные">Free</button>
-      <button class="filter-tab" data-filter="dev" onclick="setGameFilter('dev')" data-en="In Dev" data-ru="В разработке">In Dev</button>
+      <button class="filter-tab" data-filter="dev" onclick="setGameFilter('dev')" data-en="In Development" data-ru="В разработке">In Development</button>
     </div>
   </div>
 
@@ -1157,9 +1254,9 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
       <p class="sec-kicker fade" data-en="Systems & Tools" data-ru="Системы и утилиты">Systems & Tools</p>
       <h2 class="sec-title fade" data-en="Software & OS." data-ru="Программы и ОС.">Software & OS.</h2>
       <p class="sec-body fade"
-        data-en="Operating system concepts, desktop tools, and minimalist software experiments."
-        data-ru="Концепты операционных систем, десктопные утилиты и программные проекты.">
-        Operating system concepts, desktop tools, and minimalist software experiments.
+        data-en="Tools, interfaces, experiments, and software built beyond games."
+        data-ru="Инструменты, интерфейсы, концепты операционных систем и софт за пределами игр.">
+        Tools, interfaces, experiments, and software built beyond games.
       </p>
     </div>
   </div>
@@ -1169,9 +1266,9 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
 
 <hr>
 
-<!-- ══ STUDIO PROFILE & RESUME (#about) ══ -->
+<!-- ══ STUDIO PROFILE & CAPABILITIES (#about) ══ -->
 <div class="about-section" id="about">
-  <p class="sec-kicker fade" data-en="Studio & Capabilities" data-ru="Студия и компетенции">Studio & Capabilities</p>
+  <p class="sec-kicker fade" data-en="Studio & Capabilities" data-ru="О студии и направлениях">Studio & Capabilities</p>
   <h2 class="sec-title fade" id="about-title"></h2>
 
   <div class="resume-intro-grid">
@@ -1179,24 +1276,24 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     <div class="stats-block fade" id="about-stats"></div>
   </div>
 
-  <p class="resume-sub-header fade" data-en="Core Disciplines" data-ru="Ключевые направления разработки">Core Disciplines</p>
+  <p class="resume-sub-header fade" data-en="Capabilities" data-ru="Ключевые направления разработки">Capabilities</p>
   <div class="disciplines-grid" id="about-disciplines"></div>
 
-  <p class="resume-sub-header fade" data-en="Development Timeline" data-ru="Опыт и хронология проектов">Development Timeline</p>
+  <p class="resume-sub-header fade" data-en="Development Timeline" data-ru="Хронология развития">Development Timeline</p>
   <div class="timeline-list" id="about-timeline"></div>
 
-  <p class="resume-sub-header fade" data-en="Technology Stack & Tools" data-ru="Технологический стек и инструменты">Technology Stack & Tools</p>
+  <p class="resume-sub-header fade" data-en="Technology" data-ru="Технологии">Technology</p>
   <div class="tech-wrap fade" id="about-tech"></div>
 </div>
 
 <!-- ══ CONTACT ══ -->
 <div class="contact-wrap" id="contact">
   <div class="contact-inner">
-    <h2 class="contact-title fade" data-en="Let's talk." data-ru="Поговорим.">Let's talk.</h2>
+    <h2 class="contact-title fade" data-en="Let's build something." data-ru="Поговорим.">Let's build something.</h2>
     <p class="contact-desc fade"
-      data-en="Collaboration, playtesting, publishing, or just saying hi."
-      data-ru="Сотрудничество, плейтест, идеи или обратная связь.">
-      Collaboration, playtesting, publishing, or just saying hi.
+      data-en="For collaboration, publishing, playtesting, project inquiries, or simply saying hi."
+      data-ru="Сотрудничество, плейтест, издательство или обратная связь.">
+      For collaboration, publishing, playtesting, project inquiries, or simply saying hi.
     </p>
     <a href="mailto:feedplay.team@gmail.com" id="contact-email" class="btn-dark fade">feedplay.team@gmail.com</a>
   </div>
@@ -1230,6 +1327,63 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
   let activeProject = null;
   let activeSourceCardEl = null;
   let isAnimatingModal = false;
+
+  // Platform Logos
+  const PLATFORM_SVGS = {
+    windows: `<svg class="plat-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.45L10.94 4.3v7.12H3V5.45zm0 13.1l7.94 1.15v-7.18H3v6.03zm8.82 1.28L21 21.2v-8.68h-9.18v7.31zm0-15.66v7.25H21V2.8l-9.18 1.37z"/></svg>`,
+    android: `<svg class="plat-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 11.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 7.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C3.48 13.13 1.5 16.05 1.22 19.5h21.56c-.28-3.45-2.26-6.37-5.18-8.02zM7.5 16.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm9 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>`,
+    web: `<svg class="plat-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="fill:none"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 0 0 0 18M12 3a14.5 14.5 0 0 1 0 18"/></svg>`
+  };
+
+  function withPlatformLogos(str) {
+    if (!str) return '';
+    let out = String(str).replace(/\s*/g, '');
+    out = out.replace(/\b(Windows|macOS|Mac|iOS|Android|WebGL)\b/g, match => {
+      if (match === 'Windows') {
+        return `<span class="plat-inline">${PLATFORM_SVGS.windows}<span>Windows</span></span>`;
+      }
+      if (match === 'macOS' || match === 'Mac' || match === 'iOS') {
+        return `${match}`;
+      }
+      if (match === 'Android') {
+        return `<span class="plat-inline">${PLATFORM_SVGS.android}<span>Android</span></span>`;
+      }
+      if (match === 'WebGL') {
+        return `<span class="plat-inline">${PLATFORM_SVGS.web}<span>WebGL</span></span>`;
+      }
+      return match;
+    });
+    return out;
+  }
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    const moon = document.getElementById('theme-icon-moon');
+    const sun = document.getElementById('theme-icon-sun');
+    if (moon && sun) {
+      moon.style.display = theme === 'dark' ? 'none' : 'block';
+      sun.style.display = theme === 'dark' ? 'block' : 'none';
+    }
+  }
+
+  function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    try { localStorage.setItem('evenyou-theme', next); } catch (e) {}
+    applyTheme(next);
+  }
+
+  (function initTheme() {
+    let saved = null;
+    try { saved = localStorage.getItem('evenyou-theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') {
+      applyTheme(saved);
+    }
+  })();
 
   function t(val, fallbackEn = 'Not provided', fallbackRu = 'Не предоставлено') {
     if (val === null || val === undefined || val === '') {
@@ -1321,7 +1475,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     const statusType = item.status?.type || item.pricing || 'dev';
     const btnText = t(item.status?.label, 'Open', 'Открыть');
     const authorName = getProjectAuthor(item);
-    const platformSub = item.specs?.platform ? `${authorName} · ${t(item.specs.platform)}` : authorName;
+    const platformSub = item.specs?.platform ? `${authorName} · ${withPlatformLogos(t(item.specs.platform))}` : authorName;
     const yearBadge = item.specs?.year ? `<span class="today-card-year-badge">${t(item.specs.year)}</span>` : '';
 
     return `
@@ -1331,7 +1485,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
         <div class="today-card-art" style="${bannerStyle}"></div>
         <div class="today-card-top">
           <div class="today-card-meta-row">
-            <span class="today-card-kicker">${t(item.kicker)}</span>
+            <span class="today-card-kicker">${withPlatformLogos(t(item.kicker))}</span>
             ${yearBadge}
           </div>
           <div class="today-card-copy">
@@ -1382,7 +1536,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     const data = window.SITE_DATA;
     if (!data) return;
 
-    // 1. Hero (About Me) & Studio Resume
+    // 1. Hero & Studio Profile
     document.getElementById('hero-kicker').innerHTML = t(data.studio.heroKicker || data.studio.location);
     document.getElementById('hero-title').innerHTML = t(data.studio.heroTitle);
     document.getElementById('hero-sub').innerHTML = t(data.studio.heroSub);
@@ -1393,7 +1547,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
       .join('');
 
     document.getElementById('about-stats').innerHTML = (data.studio.stats || [])
-      .map(s => `<div class="stat-cell"><div class="stat-num">${s.num}</div><div class="stat-label">${t(s.label)}</div></div>`)
+      .map(s => `<div class="stat-cell"><div class="stat-num">${s.num}</div><div class="stat-label">${withPlatformLogos(t(s.label))}</div></div>`)
       .join('');
 
     const disciplinesEl = document.getElementById('about-disciplines');
@@ -1402,7 +1556,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
         <div class="discipline-card fade">
           <p class="discipline-tag">${t(d.tag)}</p>
           <h3 class="discipline-title">${t(d.title)}</h3>
-          <p class="discipline-desc">${t(d.desc)}</p>
+          <p class="discipline-desc">${withPlatformLogos(t(d.desc))}</p>
         </div>
       `).join('');
     }
@@ -1413,15 +1567,15 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
         <div class="timeline-row fade">
           <div class="timeline-period">${t(row.period)}</div>
           <div>
-            <p class="timeline-title">${t(row.title)}</p>
-            <p class="timeline-desc">${t(row.desc)}</p>
+            <p class="timeline-title">${withPlatformLogos(t(row.title))}</p>
+            <p class="timeline-desc">${withPlatformLogos(t(row.desc))}</p>
           </div>
         </div>
       `).join('');
     }
 
     document.getElementById('about-tech').innerHTML = (data.studio.techStack || [])
-      .map(tag => `<span class="tech-tag">${tag}</span>`)
+      .map(tag => `<span class="tech-tag">${withPlatformLogos(tag)}</span>`)
       .join('');
 
     if (data.studio.email) {
@@ -1498,12 +1652,13 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     const downloadSize = specs.downloadSize ?? specs.size ?? null;
     const installSize = specs.installSize ?? null;
 
-    const renderSpec = (labelEn, labelRu, val, subText = '') => {
+    const renderSpec = (labelEn, labelRu, val, subText = '', withLogos = false) => {
       const empty = isEmptyField(val);
+      const renderedVal = empty ? notProvided : (withLogos ? withPlatformLogos(t(val)) : t(val));
       return `
         <div class="spec-item">
           <span class="spec-label">${isRu ? labelRu : labelEn}</span>
-          <span class="spec-value ${empty ? 'empty-val' : ''}">${empty ? notProvided : t(val)}</span>
+          <span class="spec-value ${empty ? 'empty-val' : ''}">${renderedVal}</span>
           ${subText ? `<span class="spec-sub">${subText}</span>` : ''}
         </div>
       `;
@@ -1541,7 +1696,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     // Dev note
     const devHtml = isEmptyField(project.devNote)
       ? `<div class="empty-inline">${isRu ? 'Статус разработки не предоставлен' : 'Development status not provided'}</div>`
-      : `<p class="modal-text">${t(project.devNote)}</p>`;
+      : `<p class="modal-text">${withPlatformLogos(t(project.devNote))}</p>`;
 
     // Download Options / Sources (below Author segment)
     const downloadSourcesHtml = links.length === 0
@@ -1570,12 +1725,13 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
           `).join('')}
          </div>`;
 
-    const renderInfoRow = (labelEn, labelRu, val) => {
+    const renderInfoRow = (labelEn, labelRu, val, withLogos = false) => {
       const empty = isEmptyField(val);
+      const renderedVal = empty ? notProvided : (withLogos ? withPlatformLogos(t(val)) : t(val));
       return `
         <div class="info-row">
           <span class="info-row-label">${isRu ? labelRu : labelEn}</span>
-          <span class="info-row-val ${empty ? 'empty-val' : ''}">${empty ? notProvided : t(val)}</span>
+          <span class="info-row-val ${empty ? 'empty-val' : ''}">${renderedVal}</span>
         </div>
       `;
     };
@@ -1585,7 +1741,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
         <div class="modal-hero-art" style="${bannerStyle}"></div>
         <div class="modal-hero-inner">
           <div class="modal-hero-top">
-            <p class="modal-kicker">${t(project.kicker)}</p>
+            <p class="modal-kicker">${withPlatformLogos(t(project.kicker))}</p>
             <h2 class="modal-title">${t(project.name)}</h2>
             <p class="modal-headline">${t(project.headline)}</p>
           </div>
@@ -1596,7 +1752,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
               </div>
               <div class="modal-author-meta">
                 <span class="modal-author-name">${authorName}</span>
-                <span class="modal-author-role">${t(specs.platform, 'Cross-platform', 'Кроссплатформа')}</span>
+                <span class="modal-author-role">${withPlatformLogos(t(specs.platform, 'Cross-platform', 'Кроссплатформа'))}</span>
               </div>
             </div>
             <div class="modal-header-actions">
@@ -1611,7 +1767,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
           ${renderSpec('Developer', 'Разработчик', authorName)}
           ${renderSpec('Price', 'Категория цены', priceLabel)}
           ${renderSpec('Genre', 'Жанр', specs.genre)}
-          ${renderSpec('Platform', 'Платформа', specs.platform)}
+          ${renderSpec('Platform', 'Платформа', specs.platform, '', true)}
           ${renderSpec('Year', 'Год', specs.year)}
           ${renderSpec('Language', 'Язык', specs.language)}
           ${renderSpec('Download Size', 'Вес для скачивания', downloadSize)}
@@ -1666,7 +1822,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
             ${renderInfoRow('Status', 'Статус проекта', statusLabel)}
             ${renderInfoRow('Price Model', 'Модель распространения', priceLabel)}
             ${renderInfoRow('Genre / Category', 'Жанр / Категория', specs.genre)}
-            ${renderInfoRow('Platform', 'Платформа', specs.platform)}
+            ${renderInfoRow('Platform', 'Платформа', specs.platform, true)}
             ${renderInfoRow('Release Year', 'Год релиза', specs.year)}
             ${renderInfoRow('Languages', 'Языки интерфейса', specs.language)}
             ${renderInfoRow('Age Rating', 'Возрастной рейтинг', specs.age)}
