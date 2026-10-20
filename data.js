@@ -592,8 +592,8 @@ window.SITE_DATA = {
         ru: "Софт · Flutter · Windows, macOS, Android"
       },
       headline: {
-        en: "A simple local music player without subscriptions or cloud bloat.",
-        ru: "Простой локальный музыкальный плеер без подписок и лишнего шума."
+        en: "A simple local music player without cloud bloat.",
+        ru: "Простой локальный музыкальный плеер лишнего шума."
       },
       icon: {
         text: "EA",
