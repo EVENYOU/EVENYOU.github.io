@@ -607,7 +607,7 @@ window.SITE_DATA = {
         label: { en: "In Development", ru: "В разработке" }
       },
       specs: {
-        price: { en: "Free trial, EvenAudio Basic, EvenAudio Plus, EvenAudio Premium Subscribtion avaiable", ru: "Доступны бесплатная бесплатная версия, а также подписки EvenAudio Basic, EvenAudio Plus и EvenAudio Premium" },
+        price: { en: "Free trial, EvenAudio Basic(0.4$), EvenAudio Plus (1$), EvenAudio Premium (1.5$) Subscribtion avaiable or Forever acess to EvenAudio Premium for 16$", ru: "Доступно условно бесплатная версия с рекламой, а также подписка на тарифы EvenAudio Basic (0,4 $), EvenAudio Plus (1 $) и EvenAudio Premium (1,5 $). Кроме того, можно приобрести бессрочный доступ к EvenAudio Premium за 16 $." },
         genre: { en: "Music Player", ru: "Аудиоплеер" },
         platform: "Windows, macOS, Android",
         year: "2025–2026",
