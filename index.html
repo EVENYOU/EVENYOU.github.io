@@ -861,6 +861,11 @@ hr { border: none; border-top: 1px solid var(--border); }
   filter: var(--logo-filter);
   transform: scale(1.22);
 }
+.author-logo-box.color-logo img {
+  filter: none;
+  transform: none;
+  border-radius: 12px;
+}
 .author-segment-info h5 {
   font-size: 0.98rem;
   font-weight: 600;
@@ -1144,9 +1149,12 @@ hr { border: none; border-top: 1px solid var(--border); }
 .contact-title { font-size: clamp(1.75rem,3.8vw,2.6rem); font-weight: 600; letter-spacing: -0.025em; color: var(--fg); margin-bottom: 0.75rem; }
 .contact-desc { font-size: 0.9rem; font-weight: 300; color: var(--mid); line-height: 1.7; margin-bottom: 1.85rem; }
 
-footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 980px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer { padding: 2rem 2rem 2.4rem; border-top: 1px solid var(--border); max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+.footer-legal { font-size: 0.68rem; color: var(--mid); line-height: 1.6; opacity: 0.82; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .footer-logo img { height: 26px; filter: var(--logo-filter); opacity: 0.32; }
 .footer-copy { font-size: 0.68rem; color: var(--mid); max-width: 440px; line-height: 1.5; }
+.modal-legal-note { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 0.68rem; color: var(--mid); line-height: 1.55; opacity: 0.75; }
 
 /* FADE IN */
 .fade { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
@@ -1289,11 +1297,11 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
 <!-- ══ CONTACT ══ -->
 <div class="contact-wrap" id="contact">
   <div class="contact-inner">
-    <h2 class="contact-title fade" data-en="Let's build something." data-ru="Поговорим.">Let's build something.</h2>
+    <h2 class="contact-title fade" data-en="Let's talk." data-ru="Давайте поговорим.">Let's talk.</h2>
     <p class="contact-desc fade"
-      data-en="For collaboration, publishing, playtesting, project inquiries, or simply saying hi."
-      data-ru="Сотрудничество, плейтест, издательство или обратная связь.">
-      For collaboration, publishing, playtesting, project inquiries, or simply saying hi.
+      data-en="We're happy to hear from you — whether it's about collaboration, publishing, playtesting, feedback, or just saying hi."
+      data-ru="Мы всегда рады получить от вас весточку — будь то предложение о сотрудничестве, вопросы публикации, участие в игровом тестировании, обратная связь или просто приветствие.">
+      We're happy to hear from you — whether it's about collaboration, publishing, playtesting, feedback, or just saying hi.
     </p>
     <a href="mailto:feedplay.team@gmail.com" id="contact-email" class="btn-dark fade">feedplay.team@gmail.com</a>
   </div>
@@ -1301,12 +1309,19 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-logo"><img src="logo.png" alt="Evenyou"></div>
-  <p class="footer-copy"
-     data-en="© 2026 Evenyou Studio · All rights reserved."
-     data-ru="© 2026 Evenyou Studio · Все права защищены.">
-     © 2026 Evenyou Studio · All rights reserved.
+  <p class="footer-legal"
+     data-en="Apple, the Apple logo, Mac, macOS, and iOS are trademarks of Apple Inc., registered in the U.S. and other countries and regions. Windows is a trademark of the Microsoft group of companies. Android is a trademark of Google LLC. All other trademarks and brand names are the property of their respective owners."
+     data-ru="Apple, логотип Apple (), Mac, macOS и iOS являются товарными знаками компании Apple Inc., зарегистрированными в США и других странах и регионах. Windows является товарным знаком корпорации Microsoft. Android является товарным знаком компании Google LLC. Все прочие товарные знаки и названия принадлежат их соответствующим владельцам.">
+     Apple, логотип Apple (), Mac, macOS и iOS являются товарными знаками компании Apple Inc., зарегистрированными в США и других странах и регионах. Windows является товарным знаком корпорации Microsoft. Android является товарным знаком компании Google LLC. Все прочие товарные знаки и названия принадлежат их соответствующим владельцам.
   </p>
+  <div class="footer-bottom">
+    <div class="footer-logo"><img src="logo.png" alt="Evenyou"></div>
+    <p class="footer-copy"
+       data-en="© 2026 Evenyou Studio · All rights reserved."
+       data-ru="© 2026 Evenyou Studio · Все права защищены.">
+       © 2026 Evenyou Studio · All rights reserved.
+    </p>
+  </div>
 </footer>
 
 <!-- ══ EXPANDED PROJECT MODAL ══ -->
@@ -1420,16 +1435,47 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
     return `background: radial-gradient(ellipse 75% 65% at 85% 0%, ${accent}28, transparent 70%), ${baseBg};`;
   }
 
-  // Returns whoever made the game/project (defaults to Evenyou Studio)
+  // Resolves studio info for a project from `studios[item.studio]` or direct fields on the project
+  function getProjectStudioInfo(item) {
+    const studiosMap = window.SITE_DATA.studios || {};
+    const studioKey = item.studio || 'evenyou';
+    const fromDict = studiosMap[studioKey] || studiosMap['evenyou'] || {};
+    const defaultStudio = window.SITE_DATA.studio || {};
+
+    let name = t(fromDict.name || defaultStudio.author || defaultStudio.name, 'Evenyou Studio', 'Evenyou Studio');
+    if (item.author && !isEmptyField(item.author)) name = t(item.author);
+    else if (item.specs?.author && !isEmptyField(item.specs.author)) name = t(item.specs.author);
+
+    let logo = fromDict.logo || defaultStudio.logo || 'logo.png';
+    if (item.authorLogo && item.authorLogo.trim() !== '') logo = item.authorLogo;
+
+    let monochromeLogo = fromDict.monochromeLogo !== undefined ? fromDict.monochromeLogo : (logo === 'logo.png');
+    if (item.authorMonochromeLogo !== undefined) monochromeLogo = item.authorMonochromeLogo;
+
+    const subtitle = item.authorSubtitle
+      ? t(item.authorSubtitle)
+      : t(fromDict.subtitle || defaultStudio.location, 'Independent game & software studio', 'Независимая студия игр и ПО');
+
+    const badge = item.authorBadge
+      ? t(item.authorBadge)
+      : t(fromDict.badge, 'In-House Production', 'In-House проект');
+
+    return { name, logo, monochromeLogo, subtitle, badge };
+  }
+
   function getProjectAuthor(item) {
-    if (item.author && !isEmptyField(item.author)) return t(item.author);
-    if (item.specs?.author && !isEmptyField(item.specs.author)) return t(item.specs.author);
-    return t(window.SITE_DATA.studio?.author, 'Evenyou Studio', 'Evenyou Studio');
+    return getProjectStudioInfo(item).name;
   }
 
   function getProjectAuthorLogo(item) {
-    if (item.authorLogo && item.authorLogo.trim() !== '') return item.authorLogo;
-    return window.SITE_DATA.studio?.logo || 'logo.png';
+    return getProjectStudioInfo(item).logo;
+  }
+
+  function getCoverTitle(item) {
+    if (item.coverTitle && !isEmptyField(item.coverTitle)) {
+      return t(item.coverTitle);
+    }
+    return t(item.name);
   }
 
   function getProjectPriceLabel(item) {
@@ -1489,7 +1535,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
             ${yearBadge}
           </div>
           <div class="today-card-copy">
-            <h3 class="today-card-title">${t(item.name)}</h3>
+            <h3 class="today-card-title">${getCoverTitle(item)}</h3>
             <p class="today-card-headline">${t(item.headline)}</p>
           </div>
         </div>
@@ -1630,8 +1676,9 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
       : (project.icon && project.icon.text ? project.icon.text : t(project.name).slice(0, 2).toUpperCase());
 
     const bannerStyle = getBannerStyle(project);
-    const authorName = getProjectAuthor(project);
-    const authorLogo = getProjectAuthorLogo(project);
+    const studioInfo = getProjectStudioInfo(project);
+    const authorName = studioInfo.name;
+    const authorLogo = studioInfo.logo;
     const priceLabel = getProjectPriceLabel(project);
     const statusLabel = project.status?.label ? t(project.status.label) : notProvided;
 
@@ -1742,7 +1789,7 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
         <div class="modal-hero-inner">
           <div class="modal-hero-top">
             <p class="modal-kicker">${withPlatformLogos(t(project.kicker))}</p>
-            <h2 class="modal-title">${t(project.name)}</h2>
+            <h2 class="modal-title">${getCoverTitle(project)}</h2>
             <p class="modal-headline">${t(project.headline)}</p>
           </div>
           <div class="modal-identity-bar">
@@ -1751,8 +1798,8 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
                 ${iconContent}
               </div>
               <div class="modal-author-meta">
-                <span class="modal-author-name">${authorName}</span>
-                <span class="modal-author-role">${withPlatformLogos(t(specs.platform, 'Cross-platform', 'Кроссплатформа'))}</span>
+                <span class="modal-author-name">${t(project.name)}</span>
+                <span class="modal-author-role">${authorName} · ${withPlatformLogos(t(specs.platform, 'Cross-platform', 'Кроссплатформа'))}</span>
               </div>
             </div>
             <div class="modal-header-actions">
@@ -1798,15 +1845,15 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
           <p class="modal-sec-label">${isRu ? 'Разработчик' : 'Developer'}</p>
           <div class="author-segment-card">
             <div class="author-segment-left">
-              <div class="author-logo-box">
+              <div class="author-logo-box ${studioInfo.monochromeLogo === false ? 'color-logo' : ''}">
                 <img src="${authorLogo}" alt="${authorName}">
               </div>
               <div class="author-segment-info">
                 <h5>${authorName}</h5>
-                <p>${t(window.SITE_DATA.studio?.location)}</p>
+                <p>${studioInfo.subtitle}</p>
               </div>
             </div>
-            <span class="author-segment-badge">${isRu ? 'In-House проект' : 'In-House Production'}</span>
+            <span class="author-segment-badge">${studioInfo.badge}</span>
           </div>
         </div>
 
@@ -1829,6 +1876,11 @@ footer { padding: 1.65rem 2rem; border-top: 1px solid var(--border); max-width: 
             ${renderInfoRow('Download Size', 'Вес для скачивания', downloadSize)}
             ${renderInfoRow('Install Size', 'Вес для установки', installSize)}
           </div>
+          <p class="modal-legal-note">
+            ${isRu
+              ? 'Apple, логотип Apple (), Mac, macOS и iOS являются товарными знаками компании Apple Inc. Windows — товарный знак корпорации Microsoft. Android — товарный знак Google LLC.'
+              : 'Apple, the Apple logo (), Mac, macOS, and iOS are trademarks of Apple Inc. Windows is a trademark of Microsoft Corporation. Android is a trademark of Google LLC.'}
+          </p>
         </div>
       </div>
     `;

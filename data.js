@@ -4,15 +4,28 @@
  * ============================================================================
  * 
  * Здесь хранятся:
- * 1. `studio`   — Информация о студии Evenyou Studio
+ * 0. `studios`  — Справочник студий-разработчиков (для карточек и страниц проектов)
+ * 1. `studio`   — Информация о главной студии Evenyou Studio (главный экран и раздел «О студии»)
  * 2. `games`    — Раздел «Игры» (Games)
  * 3. `software` — Раздел «Программы и ОС» (Software & OS)
  * 
- * Как добавить новую игру или программу:
- * Скопируй ШАБЛОН ниже и вставь его в массив `games` или `software`.
- * Если каких-то данных нет (скриншотов, ссылок, размера) — оставь `[]` или `null`.
- * Сайт сам напишет «Скриншоты не предоставлены» / «Не предоставлено».
+ * ────────────────────────────────────────────────────────────────────────────
+ * КАК ИЗМЕНИТЬ ИЛИ ДОБАВИТЬ СТУДИЮ ДЛЯ ПРОЕКТА:
+ * ────────────────────────────────────────────────────────────────────────────
+ * Способ 1 (через список `studios` ниже — рекомендуется):
+ *   1. В блоке `studios` измени данные `"evenyou"` или добавь новую студию по ключу
+ *      (например, `"my-team": { name: "My Team", logo: "my-logo.png", ... }`).
+ *   2. У нужной игры или программы в поле `studio` укажи этот ключ:
+ *      `studio: "my-team"`
  * 
+ * Способ 2 (напрямую внутри конкретного проекта):
+ *   Внутри объекта игры/программы можно указать:
+ *   `author: "Название студии"`,
+ *   `authorLogo: "путь/к/логотипу.png"`,
+ *   `authorSubtitle: { en: "Indie Team", ru: "Инди-команда" }`,
+ *   `authorBadge: { en: "Partner Project", ru: "Партнёрский проект" }`
+ * 
+ * ────────────────────────────────────────────────────────────────────────────
  * Категории оплаты (`pricing` и `status.type`):
  * - "paid"    — Платный проект (Paid)
  * - "free"    — Бесплатный проект (Free)
@@ -25,7 +38,45 @@
 window.SITE_DATA = {
 
   // ══════════════════════════════════════════════════════════════════════════
-  // 1. О СТУДИИ (HERO & STUDIO PROFILE)
+  // 0. СПИСОК СТУДИЙ-РАЗРАБОТЧИКОВ (ДЛЯ ПРИВЯЗКИ К ПРОЕКТАМ ПО ПОЛЮ `studio`)
+  // ══════════════════════════════════════════════════════════════════════════
+  studios: {
+    "evenyou": {
+      name: { en: "Evenyou Studio", ru: "Evenyou Studio" },
+      logo: "logo.png",
+      // monochromeLogo: true — логотип адаптируется под светлую/тёмную тему (чёрный/белый).
+      // Поставь false, если используешь цветную картинку логотипа.
+      monochromeLogo: true,
+      subtitle: {
+        en: "Independent game & software studio",
+        ru: "Независимая студия игр и ПО"
+      },
+      badge: {
+        en: "In-House Production",
+        ru: "In-House проект"
+      }
+    }
+
+    // Пример добавления ещё одной студии (раскомментируй при необходимости):
+    /*
+    "other-studio": {
+      name: { en: "Other Studio", ru: "Другая студия" },
+      logo: "other-logo.png",
+      monochromeLogo: false,
+      subtitle: {
+        en: "Partner development team",
+        ru: "Команда-партнёр"
+      },
+      badge: {
+        en: "Co-Production",
+        ru: "Совместный проект"
+      }
+    }
+    */
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // 1. О ГЛАВНОЙ СТУДИИ НА САЙТЕ (HERO & STUDIO PROFILE)
   // ══════════════════════════════════════════════════════════════════════════
   studio: {
     name: "Evenyou Studio",
@@ -37,8 +88,8 @@ window.SITE_DATA = {
       ru: "Независимая студия игр и ПО"
     },
     heroKicker: {
-      en: "Independent studio · Est. 2020s",
-      ru: "Независимая студия · Est. 2020s"
+      en: "Presents",
+      ru: "Представляем"
     },
     heroTitle: {
       en: "Independent games<br>& software.",
@@ -171,16 +222,21 @@ window.SITE_DATA = {
   games: [
     {
       id: "screen",
+      studio: "evenyou",
       featured: true,
       pricing: "paid",
       name: "SCREEN",
+      coverTitle: {
+        en: "Your screen is the setting.",
+        ru: "Твой экран — место действия."
+      },
       kicker: {
         en: "Psychological Horror · Windows, macOS, Android, iOS",
         ru: "Психологический хоррор · Windows, macOS, Android, iOS"
       },
       headline: {
-        en: "NullPath watches every move you make.",
-        ru: "NullPath следит за каждым твоим шагом."
+        en: "NullPath watches every window you open and every move you make.",
+        ru: "NullPath следит за каждым открытым окном и каждым твоим шагом."
       },
       icon: {
         text: "SCR",
@@ -233,16 +289,21 @@ window.SITE_DATA = {
 
     {
       id: "endless-night-at-freddys",
+      studio: "evenyou",
       featured: false,
       pricing: "free",
       name: "The Endless Night at Freddy's",
+      coverTitle: {
+        en: "Every watt of power counts.",
+        ru: "На счету каждый процент энергии."
+      },
       kicker: {
         en: "Tactical Horror · Windows, macOS",
         ru: "Тактический хоррор · Windows, macOS"
       },
       headline: {
-        en: "Survive an unforgiving night where every watt of power counts.",
-        ru: "Переживи ночь, где на счету каждый процент энергии."
+        en: "Survive an unforgiving night under relentless pressure.",
+        ru: "Переживи бесконечную ночь под постоянным давлением."
       },
       icon: {
         text: "TN",
@@ -250,7 +311,7 @@ window.SITE_DATA = {
         bg: "linear-gradient(135deg, #241708, #120b04)",
         color: "#fbbf24"
       },
-      banner: { image: "TENAF/Screenshots/34597794-evxympdm-v4.webp" },
+      banner: { image: "TENAF/Screenshots/48719548-pec4kj4v-v4.webp" },
       status: {
         type: "free",
         label: { en: "Free · Game Jolt", ru: "Бесплатно" }
@@ -259,17 +320,17 @@ window.SITE_DATA = {
         price: { en: "Free", ru: "Бесплатно" },
         genre: { en: "Tactical Horror", ru: "Тактический хоррор" },
         platform: "Windows, macOS",
-        year: "2024",
+        year: "2026",
         language: "EN, RU",
         downloadSize: "175 MB",
         installSize: ">500 MB",
         age: "12+"
       },
       screenshots: [
-        "TENAF/Screenshots/34597794-evxympdm-v4.webp",
+        "TENAF/Screenshots/48719548-pec4kj4v-v4.webp",
         "TENAF/Screenshots/34597795-s3km5bmg-v4.webp",
         "TENAF/Screenshots/34597798-fchggbsa-v4.webp",
-        "TENAF/Screenshots/48719548-pec4kj4v-v4.webp",
+        "TENAF/Screenshots/34597794-evxympdm-v4.webp",
         "TENAF/Screenshots/48719551-arbxazhu-v4.webp",
         "TENAF/Screenshots/48719598-aae6j9rx-v4.webp"
       ],
@@ -279,24 +340,20 @@ window.SITE_DATA = {
       },
       features: [
         {
-          title: { en: "Endless Escalation", ru: "Бесконечная эскалация" },
+          title: { en: "What's difference?", ru: "В чем отличие?" },
           desc: {
-            en: "Dynamic difficulty that pushes tactical reflexes to the limit.",
-            ru: "Динамическая сложность, постепенно наращивающая темп и агрессию."
+            en: "Dynamic difficulty that pushes tactical reflexes to the limit. Game lasts until you die.",
+            ru: "Динамическая сложность, постепенно наращивающая темп и агрессию. Игра длиться до самой смерти."
           }
         },
         {
-          title: { en: "Positional Audio & Cameras", ru: "Звук и камеры" },
+          title: { en: "Partial controller support!", ru: "Частичная поддержка геймпада!" },
           desc: {
-            en: "Rebuilt lighting, camera interference, and spatial audio cues.",
-            ru: "Переработанный свет, помехи камер и пространственные звуковые ориентиры."
+            en: "Take your Dualsense or Xbox to play! But it's still recomended to play on Keyboard/Mouse.",
+            ru: "Для игры можно использовать контроллер DualSense или Xbox! Однако всё же рекомендуется играть с помощью клавиатуры и мыши."
           }
         }
       ],
-      devNote: {
-        en: "Released and available for free on Game Jolt and Itch.io.",
-        ru: "Проект завершён и бесплатно доступен на Game Jolt и Itch.io."
-      },
       links: [
         {
           label: { en: "Get it on GameJolt", ru: "Скачать на GameJolt" },
@@ -304,7 +361,7 @@ window.SITE_DATA = {
           url: "https://gamejolt.com/games/TENAFR/913822"
         },
         {
-          label: { en: "Get it on Itch IO", ru: "Скачать на Itch IO" },
+          label: { en: "Get it on Itch.io", ru: "Скачать на Itch.io" },
           source: "Itch.io",
           url: "https://evenyou-entertainment.itch.io/tenaf"
         }
@@ -313,9 +370,14 @@ window.SITE_DATA = {
 
     {
       id: "brainrot-jumper",
+      studio: "evenyou",
       featured: false,
       pricing: "free",
       name: "BrainRot Jumper",
+      coverTitle: {
+        en: "Straight up, zero hesitation.",
+        ru: "Только вверх, без остановки."
+      },
       kicker: {
         en: "Casual Arcade · Android",
         ru: "Казуальная аркада · Android"
@@ -380,16 +442,21 @@ window.SITE_DATA = {
 
     {
       id: "ragmania",
+      studio: "evenyou",
       featured: false,
       pricing: "paid",
       name: "RagMania",
+      coverTitle: {
+        en: "Pure emergent physics.",
+        ru: "Песочница честной физики."
+      },
       kicker: {
         en: "Physics Sandbox · Windows",
         ru: "Физическая песочница · Windows"
       },
       headline: {
-        en: "Active-ragdoll chaos, contraptions, and emergent physics.",
-        ru: "Активный рэгдолл, механизмы и честная физика."
+        en: "Active-ragdoll chaos, contraptions, and sandbox experiments.",
+        ru: "Активный рэгдолл, механизмы и полная свобода экспериментов."
       },
       icon: {
         text: "RM",
@@ -442,16 +509,21 @@ window.SITE_DATA = {
 
     {
       id: "best-way-archives",
+      studio: "evenyou",
       featured: false,
       pricing: "arch",
       name: "Sempai's Nightmare: The Deadly Pursuit",
+      coverTitle: {
+        en: "One maniac seven kids.",
+        ru: "Один маньяк семь детей."
+      },
       kicker: {
         en: "PlayFab · Cloud · Windows, Android",
         ru: "PlayFab · Cloud · Windows, Android"
       },
       headline: {
-        en: "Early experiments with cloud backends and prototypes.",
-        ru: "Ранние разработки, облачные системы и прототипы."
+        en: "Who will win?",
+        ru: "Кто же выйграет?"
       },
       icon: {
         text: "SN",
@@ -466,7 +538,7 @@ window.SITE_DATA = {
       },
       specs: {
         price: { en: "Archived", ru: "Архив" },
-        genre: { en: "R&D / Prototypes", ru: "R&D / Прототипы" },
+        genre: { en: "Multiplayer, Survival horror", ru: "Мультиплеер, Хоррор на выживание" },
         platform: "Windows, Android",
         year: "2022–2023",
         language: "RU, EN",
@@ -481,8 +553,8 @@ window.SITE_DATA = {
         "SMTDP/ScreenShots/yW90Dj.png"
       ],
       description: {
-        en: "A collection of earlier games and technical prototypes — including Best Way — exploring cloud saves, PlayFab authentication, and leaderboards.",
-        ru: "Собрание ранних проектов и технических прототипов (включая Best Way), на которых отрабатывались облачные сохранения и архитектура PlayFab."
+        en: "Sempai's Nightmare: The Deadly Pursuit is an atmospheric survival horror game in which an ordinary night turns into a lethal game of cat and mouse. You find yourself trapped in an abandoned building, pursued by the mysterious Sampai. To escape, you must explore the rooms, search for keys and useful items, solve puzzles, and keep a close watch on your surroundings. The core gameplay revolves around evasion and survival: you cannot fight Sampai, so you must hide, push him away, find safe paths, and memorize the layout of the building. Any noise or wrong move could draw his attention. As you uncover the history of the building and Sampai himself, you begin to realize that this is no ordinary nightmare—it is the consequence of events that took place here many years ago. Survive until dawn, unravel the mystery, and don't let Sampai find you.",
+        ru: "Sempai's Nightmare: The Deadly Pursuit — атмосферный survival horror, в котором обычная ночь превращается в смертельную игру в кошки-мышки. Игрок оказывается заперт в заброшенном здании, где его преследует загадочный Сэмпай. Чтобы выбраться, необходимо исследовать помещения, искать ключи и полезные предметы, решать небольшие головоломки и внимательно следить за окружением. Главная механика игры — погоня и выживание: сражаться с Сэмпаем нельзя, поэтому придётся прятаться, отвлекать его, искать безопасные маршруты и запоминать расположение помещений. Любой шум или неправильное действие может привлечь его внимание. По мере прохождения игрок начинает узнавать историю здания и самого Сэмпая, постепенно понимая, что происходящее — не обычный кошмар, а последствия событий, произошедших здесь много лет назад. Выживи до рассвета, раскрой тайну и не дай Сэмпаю тебя найти."
       },
       features: [
         {
@@ -507,16 +579,21 @@ window.SITE_DATA = {
   software: [
     {
       id: "evenaudio",
+      studio: "evenyou",
       featured: true,
       pricing: "free",
       name: "EvenAudio",
+      coverTitle: {
+        en: "Your library, under your control.",
+        ru: "Твоя фонотека под твоим контролем."
+      },
       kicker: {
         en: "Software · Flutter · Windows, macOS, Android",
         ru: "Софт · Flutter · Windows, macOS, Android"
       },
       headline: {
-        en: "A simple local music player built around ownership, convenience, and control.",
-        ru: "Простой локальный музыкальный плеер, построенный вокруг удобства и контроля."
+        en: "A simple local music player without subscriptions or cloud bloat.",
+        ru: "Простой локальный музыкальный плеер без подписок и лишнего шума."
       },
       icon: {
         text: "EA",
@@ -569,16 +646,21 @@ window.SITE_DATA = {
 
     {
       id: "evenos",
+      studio: "evenyou",
       featured: false,
       pricing: "free",
       name: "EvenOS",
+      coverTitle: {
+        en: "Just your computer.",
+        ru: "Просто твой компьютер."
+      },
       kicker: {
         en: "Desktop OS · Concept",
         ru: "Десктопная ОС · Концепт"
       },
       headline: {
-        en: "No bloat. No tracking. Just your computer.",
-        ru: "Никакого блоата. Никакой слежки. Просто твой компьютер."
+        en: "No bloat. No tracking. Minimal and private desktop environment.",
+        ru: "Никакого блоата, фоновой слежки и навязчивых сервисов."
       },
       icon: {
         text: "OS",
@@ -638,16 +720,21 @@ window.SITE_DATA = {
 
     {
       id: "evenos-mobile",
+      studio: "evenyou",
       featured: false,
       pricing: "free",
       name: "EvenOS Mobile",
+      coverTitle: {
+        en: "A phone that works for you.",
+        ru: "Телефон, который работает на тебя."
+      },
       kicker: {
-        en: "Mobile Environment · Concept · Android, iOS",
-        ru: "Мобильная ОС · Концепт · Android, iOS"
+        en: "Mobile Environment",
+        ru: "Мобильная ОС"
       },
       headline: {
-        en: "A phone that works for you, not against you.",
-        ru: "Телефон, который работает на тебя, а не против."
+        en: "One-handed comfort, zero background drain, and desktop continuity.",
+        ru: "Управление одной рукой, честное закрытие приложений и связка с ПК."
       },
       icon: {
         text: "EM",
@@ -663,7 +750,7 @@ window.SITE_DATA = {
       specs: {
         price: { en: "Concept", ru: "Концепт" },
         genre: { en: "Mobile OS", ru: "Мобильная ОС" },
-        platform: "Android, iOS",
+        platform: "EvenOS Mobile",
         year: "2025–2026",
         language: "EN, RU",
         downloadSize: null,
