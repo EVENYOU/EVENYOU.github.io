@@ -729,8 +729,8 @@ window.SITE_DATA = {
         ru: "Телефон, который работает на тебя."
       },
       kicker: {
-        en: "Mobile Environment",
-        ru: "Мобильная ОС"
+        en: "Mobile Environment · Concept",
+        ru: "Мобильная ОС · Концепт"
       },
       headline: {
         en: "One-handed comfort, zero background drain, and desktop continuity.",
