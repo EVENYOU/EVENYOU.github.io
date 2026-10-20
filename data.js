@@ -593,7 +593,7 @@ window.SITE_DATA = {
       },
       headline: {
         en: "A simple local music player without cloud bloat.",
-        ru: "Простой локальный музыкальный плеер лишнего шума."
+        ru: "Простой локальный музыкальный плеер без лишнего шума."
       },
       icon: {
         text: "EA",
