@@ -8,6 +8,7 @@
  * 1. `studio`   — Информация о главной студии Evenyou Studio (главный экран и раздел «О студии»)
  * 2. `games`    — Раздел «Игры» (Games)
  * 3. `software` — Раздел «Программы и ОС» (Software & OS)
+ * 4. `news`     — Раздел «Новости» (News & Devlog) в стиле Apple Newsroom
  * 
  * ────────────────────────────────────────────────────────────────────────────
  * КАК ИЗМЕНИТЬ ИЛИ ДОБАВИТЬ СТУДИЮ ДЛЯ ПРОЕКТА:
@@ -26,12 +27,28 @@
  *   `authorBadge: { en: "Partner Project", ru: "Партнёрский проект" }`
  * 
  * ────────────────────────────────────────────────────────────────────────────
- * Категории оплаты (`pricing` и `status.type`):
- * - "paid"    — Платный проект (Paid)
- * - "free"    — Бесплатный проект (Free)
- * - "dev"     — В разработке (In Development)
- * - "concept" — Концепт (Concept)
- * - "arch"    — Архив (Archived)
+ * КАК ДОБАВИТЬ НОВОСТЬ В РАЗДЕЛ `news`:
+ * ────────────────────────────────────────────────────────────────────────────
+ * Добавь новый объект в массив `news`:
+ * - `id`: уникальный идентификатор (например, `"my-news-2026"`)
+ * - `featured`: `true` (широкая главная карточка на 2 колонки) или `false` (обычная карточка)
+ * - `category`: `"announcement"` (Анонсы), `"devlog"` (Девлог) или `"release"` (Релизы)
+ * - `tag`: текст рубрики `{ en: "Devlog", ru: "Девлог" }`
+ * - `date`: дата публикации `{ en: "October 2026", ru: "Октябрь 2026" }`
+ * - `readTime`: время чтения `{ en: "2 min read", ru: "2 мин чтения" }` (или `null`)
+ * - `projectId`: ID связанной игры или программы (например, `"screen"`), либо `null`
+ * - `cover`: `{ image: "путь/к/обложке.png", bg: "...", accent: "#a78bfa" }`
+ * - `title`: заголовок новости `{ en: "...", ru: "..." }`
+ * - `summary`: краткий анонс для карточки `{ en: "...", ru: "..." }`
+ * - `body`: массив абзацев `[{ en: "...", ru: "..." }, { heading: { en: "...", ru: "..." }, text: { en: "...", ru: "..." } }]`
+ * 
+ * ────────────────────────────────────────────────────────────────────────────
+ * ЮРИДИЧЕСКОЕ ПРИМЕЧАНИЕ В КОНЦЕ ОТКРЫТОЙ КАРТОЧКИ (`note` и `studio.legalNote`):
+ * ────────────────────────────────────────────────────────────────────────────
+ * 1. У любого проекта или новости можно добавить поле `note: { en: "...", ru: "..." }` —
+ *    оно отобразится мелким серым шрифтом в самом низу открытой карточки (как правовая сноска).
+ * 2. Общий правовой текст про Apple, Microsoft и Google внизу открытых карточек
+ *    редактируется в блоке `studio.legalNote` ниже.
  * ============================================================================
  */
 
@@ -213,7 +230,12 @@ window.SITE_DATA = {
       "Git",
       "Android",
       "WebGL"
-    ]
+    ],
+    // Общая юридическая сноска внизу открытых карточек проектов и новостей (редактируется здесь):
+    legalNote: {
+      en: "Evenyou Studio, the Evenyou logo, EvenOS, EvenOS Mobile, EvenAudio, SCREEN, RagMania, and BrainRot Jumper are trademarks and project titles of Evenyou Studio. Apple, the Apple logo (), Mac, macOS, and iOS are trademarks of Apple Inc., registered in the U.S. and other countries and regions. Windows is a trademark of the Microsoft group of companies. Android is a trademark of Google LLC. Evenyou Studio is not affiliated with, sponsored, or endorsed by Apple Inc., Microsoft Corporation, or Google LLC.",
+      ru: "Evenyou Studio, логотип Evenyou, EvenOS, EvenOS Mobile, EvenAudio, SCREEN, RagMania и BrainRot Jumper являются товарными знаками и названиями проектов Evenyou Studio. Apple, логотип Apple (), Mac, macOS и iOS являются товарными знаками компании Apple Inc., зарегистрированными в США и других странах и регионах. Windows является товарным знаком корпорации Microsoft. Android является товарным знаком компании Google LLC. Evenyou Studio не связана с Apple Inc., Microsoft Corporation и Google LLC, не спонсируется и не одобрена ими."
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -240,11 +262,11 @@ window.SITE_DATA = {
       },
       icon: {
         text: "SCR",
-        image: "",
+        image: "SCREEN/Logo.png",
         bg: "linear-gradient(135deg, #1e152a, #0e0b14)",
         color: "#c4b5fd"
       },
-      banner: { image: "" },
+      banner: { image: "SCREEN/thumbnail.webp" },
       status: {
         type: "paid",
         label: { en: "Paid · In Dev", ru: "Платно · В разработке" }
@@ -354,6 +376,11 @@ window.SITE_DATA = {
           }
         }
       ],
+      // Примечание в конце открытой карточки (необязательное поле `note`; без него блок не показывается)
+      note: {
+        en: "Unofficial fan game. Not affiliated with, authorized, or endorsed by Scottgames, Steel Wool Studios, or the owners of the Five Nights at Freddy's franchise. All related names and characters are the property of their respective owners. Distributed free of charge.",
+        ru: "Неофициальная фан-игра. Не связана с Scottgames, Steel Wool Studios и правообладателями франшизы Five Nights at Freddy's, не одобрена и не авторизована ими. Все связанные названия и персонажи принадлежат их владельцам. Распространяется бесплатно."
+      },
       links: [
         {
           label: { en: "Get it on GameJolt", ru: "Скачать на GameJolt" },
@@ -592,8 +619,8 @@ window.SITE_DATA = {
         ru: "Софт · Flutter · Windows, macOS, Android"
       },
       headline: {
-        en: "A simple local music player without cloud bloat.",
-        ru: "Простой локальный музыкальный плеер без лишнего шума."
+        en: "A simple local music player without subscriptions or cloud bloat.",
+        ru: "Простой локальный музыкальный плеер без подписок и лишнего шума."
       },
       icon: {
         text: "EA",
@@ -607,7 +634,7 @@ window.SITE_DATA = {
         label: { en: "In Development", ru: "В разработке" }
       },
       specs: {
-        price: { en: "Free trial, EvenAudio Basic(0.4$), EvenAudio Plus (1$), EvenAudio Premium (1.5$), EvenAudio Max (3.5$) Subscribtion avaiable or Forever acess to EvenAudio Premium for 16$", ru: "Доступно условно бесплатная версия с рекламой, а также подписка на тарифы EvenAudio Basic (0,4 $), EvenAudio Plus (1 $) и EvenAudio Premium (1,5 $), EvenAudio Max (3.5$). Кроме того, можно приобрести бессрочный доступ к EvenAudio Premium за 16 $." },
+        price: { en: "Free", ru: "Бесплатно" },
         genre: { en: "Music Player", ru: "Аудиоплеер" },
         platform: "Windows, macOS, Android",
         year: "2025–2026",
@@ -618,8 +645,8 @@ window.SITE_DATA = {
       },
       screenshots: [],
       description: {
-        en: "EvenAudio is a simple local music player built around ownership, convenience, and control. Designed for clean, distraction-free listening without cloud bloat.",
-        ru: "EvenAudio — лаконичный локальный музыкальный плеер, созданный вокруг контроля над своей фонотекой и удобства. Без лишнего шума и фоновой телеметрии."
+        en: "EvenAudio is a simple local music player built around ownership, convenience, and control. Designed for clean, distraction-free listening without subscriptions or cloud bloat.",
+        ru: "EvenAudio — лаконичный локальный музыкальный плеер, созданный вокруг контроля над своей фонотекой и удобства. Без подписок, лишнего шума и фоновой телеметрии."
       },
       features: [
         {
@@ -729,8 +756,8 @@ window.SITE_DATA = {
         ru: "Телефон, который работает на тебя."
       },
       kicker: {
-        en: "Mobile Environment · Concept",
-        ru: "Мобильная ОС · Концепт"
+        en: "Mobile Environment",
+        ru: "Мобильная ОС"
       },
       headline: {
         en: "One-handed comfort, zero background drain, and desktop continuity.",
@@ -791,5 +818,191 @@ window.SITE_DATA = {
       },
       links: []
     }
+  ],
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // 4. НОВОСТИ И ДЕВЛОГ (NEWS & UPDATES — APPLE NEWSROOM STYLE)
+  // ══════════════════════════════════════════════════════════════════════════
+  news: [
+    {
+      id: "evenyou-studio-2026",
+      featured: true,
+      studio: "evenyou",
+      category: "announcement",
+      tag: { en: "Announcement", ru: "Анонс" },
+      date: { en: "October 2026", ru: "Октябрь 2026" },
+      readTime: { en: "2 min read", ru: "2 мин чтения" },
+      projectId: "screen",
+      cover: {
+        image: "",
+        bg: "linear-gradient(135deg, #1d152c 0%, #0b0912 100%)",
+        accent: "#c4b5fd",
+        kicker: { en: "Evenyou Studio · Vision", ru: "Evenyou Studio · Концепция" }
+      },
+      title: {
+        en: "Evenyou Studio: independent games, software, and digital experiments under one roof.",
+        ru: "Evenyou Studio: независимые игры, софт и цифровые эксперименты под одним именем."
+      },
+      summary: {
+        en: "Why we are bringing together our horror games, physics sandboxes, Flutter utilities, and EvenOS concepts into a focused independent studio.",
+        ru: "Почему мы объединяем видеоигры, локальные утилиты на Flutter и концепты операционных сред EvenOS в рамках одной камерной студии."
+      },
+      body: [
+        {
+          en: "Evenyou Studio is built around a simple premise: different projects can belong to completely different genres and formats, as long as each one explores a compelling idea, technology, or atmosphere.",
+          ru: "В основе Evenyou Studio лежит простая идея: проекты могут быть совершенно разными по жанру и формату, если каждый из них создаётся ради интересной механики, технологии или ощущения."
+        },
+        {
+          heading: { en: "Small-scale by choice", ru: "Камерный формат как преимущество" },
+          text: {
+            en: "Staying small means less bureaucracy and direct creative control over every detail — from spatial audio and lighting in Unity to responsive interfaces in Flutter.",
+            ru: "Небольшой масштаб — это отсутствие бюрократии и полный личный контроль над каждой деталью: от пространственного звука и света в Unity до чистой эргономики интерфейсов на Flutter."
+          }
+        },
+        {
+          heading: { en: "What we are building right now", ru: "Над чем мы работаем сейчас" },
+          text: {
+            en: "Our current focus spans the fourth-wall-breaking psychological thriller SCREEN (Windows, macOS, Android, iOS), the active-ragdoll sandbox RagMania, and the local-first music player EvenAudio.",
+            ru: "Сейчас основное внимание сосредоточено на психологическом триллере SCREEN (Windows, macOS, Android, iOS), физической песочнице RagMania и локальном музыкальном плеере EvenAudio."
+          }
+        }
+      ],
+      screenshots: [],
+      links: []
+    },
+    {
+      id: "brainrot-jumper-playtest",
+      featured: false,
+      studio: "evenyou",
+      category: "devlog",
+      tag: { en: "Devlog", ru: "Девлог" },
+      date: { en: "2024 – 2025", ru: "2024 – 2025" },
+      readTime: { en: "1 min read", ru: "1 мин чтения" },
+      projectId: "brainrot-jumper",
+      cover: {
+        image: "BrainRotJumper/Screenshots/unnamed.png",
+        bg: "linear-gradient(135deg, #0d2416, #07140c)",
+        accent: "#34d399"
+      },
+      title: {
+        en: "BrainRot Jumper: tuning one-thumb controls and open Android beta test.",
+        ru: "BrainRot Jumper: калибровка управления одной рукой и открытый бета-тест на Android."
+      },
+      summary: {
+        en: "How we tuned jump physics for zero input lag on mobile screens and how to join the Android playtest.",
+        ru: "Как настраивалась физика прыжка для мгновенного отклика на смартфонах и как присоединиться к тестированию."
+      },
+      body: [
+        {
+          en: "In a vertical arcade jumper, everything depends on how the character responds to a single thumb tap. We focused on removing input delay and making procedural stage escalation feel fair but tense.",
+          ru: "В вертикальном платформере всё ощущение от игры зависит от того, насколько точно персонаж реагирует на касание пальца. Мы уделили особое внимание отсутствию задержки ввода и плавному росту сложности при подъёме."
+        },
+        {
+          heading: { en: "Join the beta test", ru: "Как принять участие в бета-тесте" },
+          text: {
+            en: "Android builds are currently in testing. You can request access to the beta by writing to feedplay.team@gmail.com.",
+            ru: "Сборка для Android сейчас проходит тестирование. Запросить доступ к бета-версии можно по почте feedplay.team@gmail.com."
+          }
+        }
+      ],
+      screenshots: [
+        "BrainRotJumper/Screenshots/unnamed.png",
+        "BrainRotJumper/Screenshots/unnamed (1).png"
+      ],
+      links: []
+    },
+
+    {
+      id: "tenaf-public-release",
+      featured: false,
+      studio: "evenyou",
+      category: "release",
+      tag: { en: "Release", ru: "Релиз" },
+      date: { en: "2026", ru: "2026" },
+      readTime: { en: "2 min read", ru: "2 мин чтения" },
+      projectId: "endless-night-at-freddys",
+      cover: {
+        image: "TENAF/Screenshots/48719548-pec4kj4v-v4.webp",
+        bg: "linear-gradient(135deg, #241708, #120b04)",
+        accent: "#fbbf24"
+      },
+      title: {
+        en: "The Endless Night at Freddy's is available for free on Game Jolt and Itch.io.",
+        ru: "Релиз The Endless Night at Freddy's: игра бесплатно доступна на Game Jolt и Itch.io."
+      },
+      summary: {
+        en: "Released for Windows and macOS with rebuilt lighting, camera interference, and positional audio cues.",
+        ru: "Версии для Windows и macOS с переработанным освещением, помехами камер и пространственным звуком."
+      },
+      body: [
+        {
+          en: "The Endless Night at Freddy's was built as an unforgiving tactical survival horror where every watt of power matters. Instead of scripted nights, the game pushes reflexes with dynamic difficulty escalation.",
+          ru: "The Endless Night at Freddy's создавалась как напряжённый тактический хоррор, где важен каждый процент заряда энергии. Вместо фиксированных сценариев игра предлагает динамическую эскалацию сложности."
+        },
+        {
+          heading: { en: "Available on Windows & macOS", ru: "Доступно на Windows и macOS" },
+          text: {
+            en: "The full release is available for free download on both Game Jolt and Itch.io.",
+            ru: "Полная версия игры бесплатно доступна для скачивания на площадках Game Jolt и Itch.io."
+          }
+        }
+      ],
+      screenshots: [
+        "TENAF/Screenshots/48719548-pec4kj4v-v4.webp",
+        "TENAF/Screenshots/34597795-s3km5bmg-v4.webp",
+        "TENAF/Screenshots/34597794-evxympdm-v4.webp"
+      ],
+      links: [
+        {
+          label: { en: "Get it on GameJolt", ru: "Скачать на GameJolt" },
+          source: "Game Jolt",
+          url: "https://gamejolt.com/games/TENAFR/913822"
+        },
+        {
+          label: { en: "Get it on Itch.io", ru: "Скачать на Itch.io" },
+          source: "Itch.io",
+          url: "https://evenyou-entertainment.itch.io/tenaf"
+        }
+      ]
+    },
+    {
+      id: "evenaudio-and-evenos-devlog",
+      featured: false,
+      studio: "evenyou",
+      category: "devlog",
+      tag: { en: "Devlog", ru: "Девлог" },
+      date: { en: "2025 – 2026", ru: "2025 – 2026" },
+      readTime: { en: "2 min read", ru: "2 мин чтения" },
+      projectId: "evenaudio",
+      cover: {
+        image: "",
+        bg: "linear-gradient(135deg, #1b1633 0%, #0c0918 100%)",
+        accent: "#a78bfa",
+        kicker: { en: "Flutter & Dart · Local-First", ru: "Flutter & Dart · Локальный софт" }
+      },
+      title: {
+        en: "Designing EvenAudio: a local music player without cloud bloat or subscriptions.",
+        ru: "Разработка EvenAudio: локальный аудиоплеер без облачного шума и подписок."
+      },
+      summary: {
+        en: "How we are using Flutter and Dart to build a fast, distraction-free audio player for Windows, macOS, and Android.",
+        ru: "Как мы создаём быстрый и минималистичный плеер для собственной фонотеки на Windows, macOS и Android."
+      },
+      body: [
+        {
+          en: "Modern music apps are overloaded with streaming feeds, mandatory accounts, and background telemetry. EvenAudio was started to solve a personal need: playing local audio files cleanly and immediately.",
+          ru: "Современные музыкальные сервисы перегружены лентами рекомендаций, подписками и фоновой телеметрией. EvenAudio создаётся для простой задачи — удобного и быстрого прослушивания собственной локальной медиатеки."
+        },
+        {
+          heading: { en: "Cross-platform architecture", ru: "Кроссплатформенная архитектура" },
+          text: {
+            en: "Built with Flutter and Dart, EvenAudio shares a unified minimalist interface across Windows, macOS, and Android while keeping resource usage minimal.",
+            ru: "Благодаря связке Flutter и Dart приложение сохраняет единый минималистичный интерфейс и высокую скорость работы на Windows, macOS и Android."
+          }
+        }
+      ],
+      screenshots: [],
+      links: []
+    },
   ]
 };
