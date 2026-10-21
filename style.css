@@ -1911,6 +1911,100 @@ footer {
   font-weight: 600;
   letter-spacing: -0.01em;
 }
+.facts-strip .spec-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  margin-top: 0.25rem;
+  font-size: 0.72rem;
+  color: var(--mid);
+  line-height: 1.35;
+}
+.spec-tariff-line {
+  display: block;
+  white-space: nowrap;
+}
+.info-tariff-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.22rem;
+}
+.info-tariff-item {
+  display: block;
+}
+
+/* ── Блок тарифов и встроенных покупок в стиле App Store (In-App Purchases) ── */
+.tariffs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tariffs-note {
+  font-size: 0.86rem;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+.tariffs-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.tariff-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.35rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  gap: 1rem;
+  transition: background 0.15s ease;
+}
+
+.tariff-row:last-child {
+  border-bottom: none;
+}
+
+.tariff-row:hover {
+  background: var(--subtle);
+}
+
+.tariff-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.tariff-name {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.tariff-badge {
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 980px;
+  background: var(--subtle);
+  color: var(--mid);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.tariff-price {
+  font-weight: 600;
+  color: var(--fg);
+  font-size: 0.92rem;
+  white-space: nowrap;
+}
 
 /* ── Заголовки разделов: крупнее и без капса, как на странице App Store ── */
 .modal-sec { margin-bottom: 2.75rem; }

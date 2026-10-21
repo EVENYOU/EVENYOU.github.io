@@ -619,12 +619,12 @@ window.SITE_DATA = {
         ru: "Софт · Flutter · Windows, macOS, Android"
       },
       headline: {
-        en: "A simple local music player without subscriptions or cloud bloat.",
-        ru: "Простой локальный музыкальный плеер без подписок и лишнего шума."
+        en: "A simple local music player for your library with flexible plans.",
+        ru: "Простой локальный аудиоплеер для вашей фонотеки с гибкими тарифами."
       },
       icon: {
         text: "EA",
-        image: "",
+        image: "EvenAudio/logo.jpg",
         bg: "linear-gradient(135deg, #211638, #0e0a1a)",
         color: "#c4b5fd"
       },
@@ -635,6 +635,43 @@ window.SITE_DATA = {
       },
       specs: {
         price: { en: "Free", ru: "Бесплатно" },
+        priceSub: { en: "In-App Purchases", ru: "Встроенные покупки" },
+        tariffsNote: {
+          en: "An ad-supported free version is available, along with subscriptions to EvenAudio Basic ($0.40), EvenAudio Plus ($1.00), EvenAudio Premium ($1.50), and EvenAudio Max ($3.50). A lifetime license for EvenAudio Premium is also available for $16.00.",
+          ru: "Доступна условно бесплатная версия с рекламой, а также подписка на тарифы EvenAudio Basic (0,4 $), EvenAudio Plus (1 $) и EvenAudio Premium (1,5 $), EvenAudio Max (3.5$). Кроме того, можно приобрести бессрочный доступ к EvenAudio Premium за 16 $."
+        },
+        tariffs: [
+          {
+            name: { en: "Free Tier", ru: "Бесплатная версия" },
+            badge: { en: "Ad-supported", ru: "С рекламой" },
+            price: { en: "Free", ru: "Бесплатно" }
+          },
+          {
+            name: "EvenAudio Basic",
+            badge: { en: "Subscription", ru: "Подписка" },
+            price: "0.40 $"
+          },
+          {
+            name: "EvenAudio Plus",
+            badge: { en: "Subscription", ru: "Подписка" },
+            price: "1.00 $"
+          },
+          {
+            name: "EvenAudio Premium",
+            badge: { en: "Subscription", ru: "Подписка" },
+            price: "1.50 $"
+          },
+          {
+            name: "EvenAudio Max",
+            badge: { en: "Subscription", ru: "Подписка" },
+            price: "3.50 $"
+          },
+          {
+            name: { en: "EvenAudio Premium (Lifetime)", ru: "EvenAudio Premium (Бессрочный)" },
+            badge: { en: "One-time purchase", ru: "Бессрочный доступ" },
+            price: "16.00 $"
+          }
+        ],
         genre: { en: "Music Player", ru: "Аудиоплеер" },
         platform: "Windows, macOS, Android",
         year: "2025–2026",
@@ -645,8 +682,8 @@ window.SITE_DATA = {
       },
       screenshots: [],
       description: {
-        en: "EvenAudio is a simple local music player built around ownership, convenience, and control. Designed for clean, distraction-free listening without subscriptions or cloud bloat.",
-        ru: "EvenAudio — лаконичный локальный музыкальный плеер, созданный вокруг контроля над своей фонотекой и удобства. Без подписок, лишнего шума и фоновой телеметрии."
+        en: "EvenAudio is a simple local music player built around ownership, convenience, and control. Designed for clean, distraction-free listening with a free ad-supported tier, flexible subscriptions, and an optional lifetime purchase.",
+        ru: "EvenAudio — лаконичный локальный аудиоплеер, созданный вокруг контроля над своей фонотекой и удобства. Предлагает бесплатную версию с рекламой, линейку подписок на выбор и бессрочную лицензию."
       },
       features: [
         {
@@ -981,8 +1018,8 @@ window.SITE_DATA = {
         kicker: { en: "Flutter & Dart · Local-First", ru: "Flutter & Dart · Локальный софт" }
       },
       title: {
-        en: "Designing EvenAudio: a local music player without cloud bloat or subscriptions.",
-        ru: "Разработка EvenAudio: локальный аудиоплеер без облачного шума и подписок."
+        en: "Designing EvenAudio: a local music player without cloud bloat or streaming algorithms.",
+        ru: "Разработка EvenAudio: локальный аудиоплеер без облачного шума и алгоритмических лент."
       },
       summary: {
         en: "How we are using Flutter and Dart to build a fast, distraction-free audio player for Windows, macOS, and Android.",
@@ -991,7 +1028,7 @@ window.SITE_DATA = {
       body: [
         {
           en: "Modern music apps are overloaded with streaming feeds, mandatory accounts, and background telemetry. EvenAudio was started to solve a personal need: playing local audio files cleanly and immediately.",
-          ru: "Современные музыкальные сервисы перегружены лентами рекомендаций, подписками и фоновой телеметрией. EvenAudio создаётся для простой задачи — удобного и быстрого прослушивания собственной локальной медиатеки."
+          ru: "Современные музыкальные сервисы перегружены навязчивыми алгоритмическими лентами, обязательными облачными аккаунтами и фоновой телеметрией. EvenAudio создаётся для простой задачи — удобного и быстрого прослушивания собственной локальной медиатеки."
         },
         {
           heading: { en: "Cross-platform architecture", ru: "Кроссплатформенная архитектура" },

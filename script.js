@@ -130,8 +130,17 @@ function t(val, fallbackEn = 'Not provided', fallbackRu = 'Не предоста
   if (val === null || val === undefined || val === '') {
     return currentLang === 'ru' ? fallbackRu : fallbackEn;
   }
+  if (Array.isArray(val)) {
+    const items = val.map(v => t(v, '', '')).filter(Boolean);
+    return items.length > 0 ? items.join('\n') : (currentLang === 'ru' ? fallbackRu : fallbackEn);
+  }
   if (typeof val === 'object') {
-    const text = val[currentLang] ?? val.en ?? val.ru ?? '';
+    const raw = val[currentLang] ?? val.en ?? val.ru ?? '';
+    if (Array.isArray(raw)) {
+      const items = raw.map(v => t(v, '', '')).filter(Boolean);
+      return items.length > 0 ? items.join('\n') : (currentLang === 'ru' ? fallbackRu : fallbackEn);
+    }
+    const text = String(raw);
     if (!text || text.trim() === '') {
       return currentLang === 'ru' ? fallbackRu : fallbackEn;
     }
@@ -145,8 +154,11 @@ function t(val, fallbackEn = 'Not provided', fallbackRu = 'Не предоста
  */
 function isEmptyField(val) {
   if (val === null || val === undefined || val === '') return true;
+  if (Array.isArray(val)) return val.length === 0;
   if (typeof val === 'object') {
-    const text = val[currentLang] ?? val.en ?? val.ru ?? '';
+    const raw = val[currentLang] ?? val.en ?? val.ru ?? '';
+    if (Array.isArray(raw)) return raw.length === 0;
+    const text = String(raw);
     return !text || text.trim() === '';
   }
   return false;
@@ -240,8 +252,24 @@ function getCoverTitle(item) {
 }
 
 /**
- * Возвращает читаемую метку цены/модели распространения ("Бесплатно", "4.99$", "Концепт", "Архив").
+ * Разбивает строку цены/тарифов на отдельные тарифы, если их несколько
+ * (разделённых переносом строки `\n`, точкой с запятой `;`, вертикальной чертой `|` или запятой при длинной строке).
  */
+function parsePriceTariffs(rawPrice) {
+  if (!rawPrice) return [];
+  const str = String(rawPrice).trim();
+  if (!str) return [];
+  if (/[\n;|]/.test(str)) {
+    return str.split(/\s*[\n;|]\s*/).filter(Boolean);
+  }
+  if (str.length > 22 && /,/.test(str)) {
+    return str.split(/\s*,\s*/).filter(Boolean);
+  }
+  if (str.length > 22 && /\s\/\s/.test(str)) {
+    return str.split(/\s+\/\s+/).filter(Boolean);
+  }
+  return [str];
+}
 function getProjectPriceLabel(item) {
   if (item.specs && !isEmptyField(item.specs.price)) {
     return t(item.specs.price);
@@ -575,7 +603,28 @@ function renderModalInnerHtml(project) {
   const studioInfo = getProjectStudioInfo(project);
   const authorName = studioInfo.name;
   const authorLogo = studioInfo.logo;
+  const specs = project.specs || {};
+  const downloadSize = specs.downloadSize ?? specs.size ?? null;
+  const installSize = specs.installSize ?? null;
+
   const priceLabel = getProjectPriceLabel(project);
+  const tariffsList = specs.tariffs || project.tariffs || [];
+  const hasCustomPriceSub = Boolean(specs.priceSub && !isEmptyField(specs.priceSub));
+  const priceTariffs = parsePriceTariffs(priceLabel);
+
+  const topPriceMain = hasCustomPriceSub ? priceLabel : (priceTariffs.length > 0 ? priceTariffs[0] : priceLabel);
+  const topPriceSub = hasCustomPriceSub
+    ? t(specs.priceSub)
+    : (priceTariffs.length > 1
+        ? priceTariffs.slice(1).map(item => `<span class="spec-tariff-line">${item}</span>`).join('')
+        : '');
+
+  const infoPriceVal = tariffsList.length > 0
+    ? (hasCustomPriceSub ? `${topPriceMain} · ${topPriceSub}` : topPriceMain)
+    : (priceTariffs.length > 1
+        ? `<div class="info-tariff-list">${priceTariffs.map(item => `<span class="info-tariff-item">${item}</span>`).join('')}</div>`
+        : priceLabel);
+
   const statusLabel = project.status?.label ? t(project.status.label) : notProvided;
 
   // Кнопки действия в шапке окна
@@ -592,9 +641,29 @@ function renderModalInnerHtml(project) {
     actionsHtml = `<span class="modal-status-tag">${statusLabel}</span>`;
   }
 
-  const specs = project.specs || {};
-  const downloadSize = specs.downloadSize ?? specs.size ?? null;
-  const installSize = specs.installSize ?? null;
+  // Блок тарифов и встроенных покупок (если задан массив `tariffs` в specs)
+  const tariffsNoteHtml = (specs.tariffsNote || project.tariffsNote)
+    ? `<p class="tariffs-note">${withPlatformLogos(t(specs.tariffsNote || project.tariffsNote))}</p>`
+    : '';
+  const tariffsSecHtml = tariffsList.length === 0 ? '' : `
+    <div class="modal-sec">
+      <p class="modal-sec-label">${isRu ? 'Тарифы и встроенные покупки' : 'In-App Purchases & Plans'}</p>
+      <div class="tariffs-container">
+        ${tariffsNoteHtml}
+        <div class="tariffs-card">
+          ${tariffsList.map(item => `
+            <div class="tariff-row">
+              <div class="tariff-left">
+                <span class="tariff-name">${t(item.name)}</span>
+                ${item.badge ? `<span class="tariff-badge">${t(item.badge)}</span>` : ''}
+              </div>
+              <span class="tariff-price">${t(item.price)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `;
 
   // Вспомогательная функция для одной ячейки в верхней ленте характеристик (.specs-ribbon)
   const renderSpec = (labelEn, labelRu, val, subText = '', withLogos = false) => {
@@ -732,7 +801,7 @@ function renderModalInnerHtml(project) {
       <!-- Лента ключевых фактов в стиле App Store (.facts-strip): цена, возраст, жанр, платформа, год, язык.
            Каждая ячейка — подпись сверху и значение ниже. Остальные характеристики — в таблице «Информация» внизу. -->
       <div class="facts-strip">
-        ${renderSpec('Price', 'Цена', priceLabel)}
+        ${renderSpec('Price', 'Цена', topPriceMain, topPriceSub)}
         ${renderSpec('Age', 'Возраст', specs.age)}
         ${renderSpec('Genre', 'Жанр', specs.genre)}
         ${renderSpec('Platform', 'Платформа', specs.platform, '', true)}
@@ -756,6 +825,8 @@ function renderModalInnerHtml(project) {
         <p class="modal-sec-label">${isRu ? 'Особенности' : 'Features'}</p>
         ${featuresHtml}
       </div>
+
+      ${tariffsSecHtml}
 
       <div class="modal-sec">
         <p class="modal-sec-label">${isRu ? 'Разработчик' : 'Developer'}</p>
@@ -783,7 +854,7 @@ function renderModalInnerHtml(project) {
         <div class="info-table">
           ${renderInfoRow('Developer', 'Разработчик', authorName, true)}
           ${renderInfoRow('Status', 'Статус проекта', statusLabel)}
-          ${renderInfoRow('Price Model', 'Модель распространения', priceLabel)}
+          ${renderInfoRow('Price Model', 'Модель распространения', infoPriceVal)}
           ${renderInfoRow('Genre / Category', 'Жанр / Категория', specs.genre)}
           ${renderInfoRow('Platform', 'Платформа', specs.platform, true)}
           ${renderInfoRow('Release Year', 'Год релиза', specs.year)}
